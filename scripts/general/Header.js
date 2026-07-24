@@ -171,7 +171,7 @@ export const headerComponent=`
                     </div>
                     <div class="sidebar-text">Shorts</div>
                 </a>
-                <a href="https://valviorabackend2.onrender.com/adminDashboard" class="sidebarLink is-admin-only" id="adminSidebarLink">
+                 <a href="adminDashboard.html" class="sidebarLink is-admin-only" id="adminSidebarLink">
                     <div>
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="sidebar-image">
                             <path d="M12 2l7 3v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
