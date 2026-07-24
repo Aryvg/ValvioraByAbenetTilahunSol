@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velviora</title>
+    <link rel="icon" href="images/velviora-3.png" type="image/png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --dash908-bg-main: #ffffff;
+            --dash908-bg-secondary: #f9f9f9;
+            --dash908-header-bg: #ffffff;
+            --dash908-sidebar-bg: #ffffff;
+            --dash908-border-color: #e5e5e5;
+            --dash908-text-main: #0f0f0f;
+            --dash908-text-grey: #606060;
+            --dash908-yt-blue: #065fd4;
+            --dash908-yt-red: #cc0000;
+            --dash908-yt-shorts: #ff0000;
+            --dash908-hover-grey: #f2f2f2;
+            --dash908-header-height: 56px;
+            --dash908-sidebar-width: 240px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: var(--dash908-bg-main);
+            color: var(--dash908-text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #sidebar,
+        main {
+            transition: transform 0.3s ease, margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--dash908-header-height);
+            background: var(--dash908-header-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 1001;
+            border-bottom: 1px solid var(--dash908-border-color);
+        }
+
+        .dash908-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0px;
+            flex-shrink: 0;
+        }
+
+        .dash908-studio-logo {
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--dash908-text-main);
+            display: flex;
+            align-items: center;
+        }
+
+        .dash908-studio-logo i {
+            color: red;
+            margin-right: 4px;
+            font-size: 24px;
+        }
+
+        .dash908-search-bar {
+            background: #ffffff;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            border-radius: 40px;
+            width: 30%;
+            display: flex;
+            align-items: center;
+        }
+
+        .dash908-search-bar input {
+            background: transparent;
+            border: none;
+            color: black;
+            width: 100%;
+            outline: none;
+        }
+
+        .dash908-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .dash908-btn-create,
+        .dash908-btn-edit-chan,
+        .dash908-btn-shorts {
+            background: var(--dash908-bg-secondary);
+            border: 1px solid var(--dash908-border-color);
+            color: var(--dash908-text-main);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .dash908-btn-create:hover,
+        .dash908-btn-edit-chan:hover,
+        .dash908-btn-shorts:hover {
+            background: var(--dash908-hover-grey);
+        }
+
+        .dash908-btn-shorts i {
+            color: var(--dash908-yt-shorts);
+        }
+
+        #mainPlayer {
+            height: 600px;
+        }
+
+        #headerPfp {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid #ddd;
+            flex-shrink: 0;
+            background-color: #eee;
+        }
+
+        nav {
+            width: var(--dash908-sidebar-width);
+            background: var(--dash908-sidebar-bg);
+            margin-top: var(--dash908-header-height);
+            height: calc(100vh - var(--dash908-header-height));
+            flex-shrink: 0;
+            overflow-y: auto;
+            z-index: 1000;
+            padding-right: 8px;
+            border-right: 1px solid var(--dash908-border-color);
+        }
+
+        body.dash908-sidebar-hidden nav {
+            width: 0;
+            transform: translateX(-100%);
+        }
+
+        body.dash908-sidebar-hidden main {
+            margin-left: 0;
+        }
+
+        .dash908-nav-section {
+            border-bottom: 1px solid var(--dash908-border-color);
+            padding: 12px 0;
+        }
+
+        .dash908-nav-section-title {
+            padding: 0 24px 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dash908-text-main);
+        }
+
+        .dash908-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            color: var(--dash908-text-main);
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 10px;
+            margin: 0 8px;
+        }
+
+        .dash908-nav-link:hover {
+            background: var(--dash908-hover-grey);
+        }
+
+        .dash908-nav-link i {
+            margin-right: 24px;
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .dash908-delete-link {
+            color: var(--dash908-yt-red);
+            font-weight: 600;
+        }
+
+        .dash908-delete-link:hover {
+            background: #fff1f1;
+        }
+
+        .dash908-delete-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 15, 15, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 2000;
+            backdrop-filter: blur(3px);
+        }
+
+        .dash908-delete-modal-overlay.show {
+            display: flex;
+        }
+
+        .dash908-delete-modal {
+            width: min(100%, 460px);
+            background: #fff;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+            text-align: center;
+        }
+
+        .dash908-delete-modal i {
+            font-size: 40px;
+            color: var(--dash908-yt-red);
+            margin-bottom: 12px;
+        }
+
+        .dash908-delete-modal h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .dash908-delete-modal p {
+            color: var(--dash908-text-grey);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            font-size: 15px;
+        }
+
+        .dash908-delete-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .dash908-delete-actions button {
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            min-width: 110px;
+        }
+
+        .dash908-delete-actions .confirm {
+            background: var(--dash908-yt-red);
+            color: #fff;
+        }
+
+        .dash908-delete-actions .cancel {
+            background: #f2f2f2;
+            color: var(--dash908-text-main);
+        }
+
+        .dash908-sidebar-footer {
+            padding: 16px 24px;
+            font-size: 12px;
+            color: var(--dash908-text-grey);
+            line-height: 1.6;
+        }
+
+        main {
+            flex-grow: 1;
+            margin-top: var(--dash908-header-height);
+            overflow-y: auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dash908-banner-wrapper {
+            padding: 20px 40px 0;
+            width: 100%;
+        }
+
+        .dash908-banner-container {
+            width: 100%;
+            aspect-ratio: 1546 / 423;
+            background-color: #f0f0f0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 15px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .dash908-channel-identity {
+            display: flex;
+            align-items: center;
+            padding: 24px 40px;
+            gap: 24px;
+            border-bottom: 1px solid var(--dash908-border-color);
+            background: #fff;
+        }
+
+        .dash908-pfp-main {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid var(--dash908-border-color);
+            flex-shrink: 0;
+            background-color: #eee;
+        }
+
+        .dash908-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            padding: 24px 40px;
+        }
+
+        .dash908-card {
+            background: var(--dash908-bg-main);
+            border: 1px solid var(--dash908-border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .dash908-table-wrapper {
+            padding: 0 40px 40px;
+        }
+
+        .dash908-table-container {
+            width: 100%;
+            border: 1px solid var(--dash908-border-color);
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            background: var(--dash908-bg-secondary);
+            border-bottom: 1px solid var(--dash908-border-color);
+            color: var(--dash908-text-grey);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        th:nth-child(1) {
+            width: 35%;
+        }
+
+        th:nth-child(2) {
+            width: 15%;
+        }
+
+        th:nth-child(3) {
+            width: 18%;
+        }
+
+        th:nth-child(4) {
+            width: 12%;
+        }
+
+        th:nth-child(5) {
+            width: 10%;
+        }
+
+        th:nth-child(6) {
+            width: 10%;
+        }
+
+        td {
+            padding: 16px 12px;
+            border-bottom: 1px solid var(--dash908-border-color);
+            font-size: 14px;
+            vertical-align: top;
+            word-wrap: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        .dash908-video-cell {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .dash908-video-cell span {
+            font-weight: 500;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .dash908-thumb-mini {
+            width: 100px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #eee;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .dash908-thumb-mini:hover {
+            opacity: 0.8;
+        }
+
+        .dash908-desc-text {
+            font-size: 13px;
+            color: var(--dash908-text-grey);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .dash908-action-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .dash908-btn-action {
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+            background: var(--dash908-bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dash908-btn-edit {
+            color: var(--dash908-yt-blue);
+        }
+
+        .dash908-btn-edit:hover {
+            background: #e7f3ff;
+        }
+
+        .dash908-btn-delete {
+            color: var(--dash908-yt-red);
+        }
+
+        .dash908-btn-delete:hover {
+            background: #fff1f1;
+        }
+
+        .dash908-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 10px;
+        }
+
+        .dash908-modal {
+            background: #ffffff;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            max-height: 95vh;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .dash908-modal-content {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 5px;
+        }
+
+        .dash908-form-group {
+            margin-bottom: 14px;
+        }
+
+        .dash908-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dash908-text-grey);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .dash908-form-group input,
+        .dash908-form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .dash908-publish-btn {
+            background: var(--dash908-yt-blue);
+            border: none;
+            padding: 10px 24px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            color: #fff;
+        }
+
+        .dash908-publish-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .dash908-cancel-btn {
+            background: #eee;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #playerModal {
+            background: #ffffff;
+        }
+
+        #playerModal .dash908-modal {
+            max-width: 1000px;
+            padding: 0;
+            background: #ffffff;
+            box-shadow: none;
+            border: none;
+            max-height: 100vh;
+            width: 95%;
+        }
+
+        .dash908-player-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dash908-player-container video {
+            width: 100%;
+            height: 100%;
+            outline: none;
+        }
+
+        .dash908-close-player {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #000;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 2010;
+            transition: 0.2s;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        .dash908-close-player:hover {
+            color: var(--dash908-yt-red);
+        }
+
+        .dash908-player-info {
+            padding: 20px;
+            color: #000;
+            background: #ffffff;
+        }
+
+        #playingTitle {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-left: -20px;
+            color: #000;
+            overflow-wrap: break-word;
+            display: block;
+            width: 100%;
+        }
+
+        .dash908-playlist-item {
+            background: #f1f1f1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            border-left: 4px solid var(--dash908-yt-blue);
+        }
+
+        .dash908-playlist-item-num {
+            font-weight: bold;
+            color: var(--dash908-yt-blue);
+            font-size: 18px;
+        }
+
+        .dash908-playlist-item-info {
+            flex-grow: 1;
+        }
+
+        .playlist-label {
+            color: #cc0000;
+            font-weight: bold;
+            font-size: 11px;
+            margin-right: 5px;
+            text-transform: uppercase;
+        }
+
+        .shorts-label {
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 11px;
+            margin-right: 5px;
+            text-transform: uppercase;
+            border: 1px solid #ff0000;
+            padding: 1px 3px;
+            border-radius: 3px;
+        }
+
+        /* RESPONSIVE CSS - TABLE TO CARDS */
+        @media (max-width: 768px) {
+
+            .dash908-banner-wrapper,
+            .dash908-channel-identity,
+            .dash908-dashboard-grid,
+            .dash908-table-wrapper {
+                padding: 15px 15px;
+            }
+
+            .dash908-channel-identity {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .dash908-pfp-main {
+                width: 80px;
+                height: 80px;
+            }
+
+            #dashName {
+                font-size: 24px !important;
+            }
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                border: 1px solid var(--dash908-border-color);
+                margin-bottom: 15px;
+                border-radius: 10px;
+                overflow: hidden;
+                background: #fff;
+            }
+
+            td {
+                border: none;
+                position: relative;
+                padding-left: 40% !important;
+                text-align: left;
+                min-height: 40px;
+                border-bottom: 1px solid #eee;
+            }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+            td:before {
+                position: absolute;
+                left: 12px;
+                width: 35%;
+                padding-right: 10px;
+                white-space: nowrap;
+                content: attr(data-label);
+                font-weight: bold;
+                color: var(--dash908-text-grey);
+                font-size: 11px;
+                text-transform: uppercase;
+            }
+
+            .dash908-video-cell {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .dash908-thumb-mini {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16/9;
+            }
+        }
+
+        @media(max-width: 992px) {
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                margin-top: 0;
+                padding-top: var(--dash908-header-height);
+            }
+
+            nav.dash908-open {
+                transform: translateX(0);
+            }
+
+            main {
+                margin-left: 0 !important;
+            }
+
+            .dash908-search-bar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dash908-header-right button span {
+                display: none;
+            }
+
+            .dash908-header-right button {
+                padding: 8px;
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                justify-content: center;
+            }
+
+            .dash908-header-right button i {
+                margin: 0;
+            }
+
+            .dash908-studio-logo {
+                font-size: 16px;
+            }
+
+            .dash908-studio-logo i {
+                font-size: 20px;
+            }
+
+            .dash908-header-left {
+                gap: 0px;
+            }
+
+            header {
+                padding: 0 8px;
+            }
+
+            .dash908-header-right {
+                gap: 4px;
+            }
+        }
+    </style>
+    <style id="auth-hide-style">
+        html {
+            visibility: hidden !important
+        }
+    </style>
+
+<body>
+
+    <header>
+        <div class="dash908-header-left">
+            <i class="fas fa-bars" id="menuBtn" style="cursor:pointer; font-size: 20px; padding: 8px;"></i>
+             <div class="youtube-logo-container"
+             style="display:flex; align-items:center; gap:2px; text-decoration:none; color:black; margin-right: 3px;">
+                <img src="images/velviora-3.png" class="youtube-logo" style="height:20px">
+                
+            </div>
+            <!-- <a class="dash908-studio-logo"><i class="fab fa-youtube"></i>Velviora</a> -->
+        </div>
+        <div class="dash908-search-bar"><input placeholder="Search"></div>
+        <div class="dash908-header-right">
+            <button class="dash908-btn-edit-chan" id="openEditChanBtn" title="Edit Channel"><i class="fas fa-edit"></i>
+                <span>EDIT</span></button>
+            <button class="dash908-btn-create" id="openPlaylistBtn" title="New Playlist"><i class="fas fa-list"></i>
+                <span>PLAYLIST</span></button>
+            <button class="dash908-btn-shorts" id="openShortsBtn" title="Upload Shorts"><i class="fas fa-bolt"></i>
+                <span>SHORTS</span></button>
+            <button class="dash908-btn-create" id="openCreateBtn" title="Upload Video"><i class="fas fa-video"></i>
+                <span>CREATE</span></button>
+            <div id="headerPfp"></div>
+        </div>
+    </header>
+
+    <div id="overlay"
+        style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); display:none; z-index:999;">
+    </div>
+
+    <nav id="sidebar">
+        <div class="dash908-nav-section">
+            <a href="#" class="dash908-nav-link"><i class="fas fa-home"></i>Home</a>
+            <a href="#" class="dash908-nav-link"><i class="fas fa-bolt"></i>Shorts</a>
+            <a href="#" id="deleteChannelTrigger" class="dash908-nav-link dash908-delete-link"><i class="fas fa-trash-alt"></i>Delete</a>
+        </div>
+        <!-- <div class="dash908-nav-section">
+            <div class="dash908-nav-section-title">You</div>
+            <a href="#" class="dash908-nav-link"><i class="fas fa-history"></i>History</a>
+            <a href="#" class="dash908-nav-link"><i class="fas fa-video"></i>Your videos</a>
+            <a href="#" class="dash908-nav-link"><i class="fas fa-clock"></i>Watch later</a>
+            <a href="#" class="dash908-nav-link"><i class="fas fa-thumbs-up"></i>Liked videos</a>
+        </div>
+        <div class="dash908-sidebar-footer">© 2026 Nile Market Project</div> -->
+    </nav>
+
+
+
+    <main id="mainContent">
+        <div class="content-container js-content-container">
+            <div class="dash908-banner-wrapper">
+                <div id="dashBanner" class="dash908-banner-container"></div>
+            </div>
+
+            <div class="dash908-channel-identity">
+                <div id="dashPfp" class="dash908-pfp-main"></div>
+                <div>
+                    <h1 id="dashName" style="font-size: 32px; font-weight: 700;">Channel Name</h1>
+                    <p id="dashDesc"
+                        style="color:#606060; font-size:15px; margin-top:8px; max-width:700px; line-height:1.4;"></p>
+                    <p style="font-size:13px; color:var(--dash908-yt-blue); margin-top:10px;"><i
+                            class="fas fa-envelope"></i> <span id="dashContact"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dash908-dashboard-grid">
+            <div class="dash908-card">
+                <h3>Subscribers</h3>
+                <h1 id="dashSubscribersCount" style="font-size: 32px; margin-top: 10px;">0</h1>
+            </div>
+            <div class="dash908-card">
+                <h3>Content Items</h3>
+                <h1 id="totalVideosCount" style="font-size: 32px; margin-top: 10px;">0</h1>
+            </div>
+        </div>
+
+        <div class="dash908-table-wrapper">
+            <h2 style="margin-bottom:20px;">Channel content</h2>
+            <div class="dash908-table-container">
+                <table id="videoTable">
+                    <thead>
+                        <tr>
+                            <th>Content Type</th>
+                            <th>Short Desc</th>
+                            <th>Detailed Desc</th>
+                            <th>Date</th>
+                            <th>Views</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="videoTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+
+
+    <div class="dash908-modal-overlay" id="uploadModal">
+        <div class="dash908-modal">
+            <h3 id="modalTitle" style="margin-bottom:15px;">Upload videos</h3>
+            <div class="dash908-modal-content">
+                <div class="dash908-form-group"><label>Title</label><input id="titleInput"></div>
+                <div class="dash908-form-group" id="videoFileGroup"><label>File</label><input type="file"
+                        id="videoInput" accept="video/*"></div>
+                <div class="dash908-form-group"><label>Thumbnail</label><input type="file" id="thumbInput"
+                        accept="image/*"></div>
+                <div class="dash908-form-group"><label>Short description</label><input id="shortDesc"></div>
+                <div class="dash908-form-group"><label>Detailed description</label><textarea id="desc"
+                        rows="4"></textarea></div>
+            </div>
+            <div style="text-align:right; margin-top:15px; display: flex; justify-content: flex-end;">
+                <button class="dash908-publish-btn js-publish-video" id="saveBtn">Publish video</button>
+                <button class="dash908-cancel-btn modal-close-trigger">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="dash908-modal-overlay" id="viewPlaylistModal">
+        <div class="dash908-modal" style="max-width:900px;">
+            <h3 id="viewPlTitle" style="margin-bottom:15px;">Playlist Content</h3>
+            <div class="dash908-modal-content">
+                <table id="playlistViewTable">
+                    <thead>
+                        <tr>
+                            <th>Video</th>
+                            <th>Short Desc</th>
+                            <th>Detailed Desc</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="playlistViewBody"></tbody>
+                </table>
+            </div>
+            <div style="text-align:right; margin-top:15px;"><button
+                    class="dash908-cancel-btn modal-close-trigger">Close</button></div>
+        </div>
+    </div>
+
+    <div class="dash908-modal-overlay" id="editPlaylistModal">
+        <div class="dash908-modal" style="max-width: 800px;">
+            <h3 style="margin-bottom:15px;">Edit Playlist & Content</h3>
+            <div class="dash908-modal-content" id="editPlaylistContent"></div>
+            <div
+                style="text-align:right; margin-top:15px; border-top:1px solid #eee; padding-top:15px; display: flex; justify-content: flex-end;">
+                <button class="dash908-publish-btn" id="savePlEditsBtn">Save All Changes</button>
+                <button class="dash908-cancel-btn modal-close-trigger">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash908-modal-overlay" id="playerModal">
+        <div class="dash908-modal">
+            <i class="fas fa-times dash908-close-player" id="closePlayerBtn"></i>
+            <div class="dash908-player-container"><video id="mainPlayer" controls autoplay></video></div>
+            <div class="dash908-player-info">
+                <h2 id="playingTitle">Video Title</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash908-delete-modal-overlay" id="deleteChannelModal">
+        <div class="dash908-delete-modal" role="dialog" aria-modal="true" aria-label="Delete channel confirmation">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Delete channel?</h3>
+            <p>Clicking delete will permanently remove this channel and its related content.</p>
+            <div class="dash908-delete-actions">
+                <button class="confirm" id="confirmDeleteBtn">Delete</button>
+                <button class="cancel" id="cancelDeleteBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash908-modal-overlay" id="editChannelModal">
+        <div class="dash908-modal">
+            <h3 style="margin-bottom:15px;">Edit Channel Details</h3>
+            <div class="dash908-modal-content">
+                <div class="dash908-form-group">
+                    <label>Channel Name</label>
+                    <input id="editChanName">
+                    <div class="input-error" id="editChanNameError" style="display:none;color:#c00;font-size:12px;margin-top:4px"></div>
+                </div>
+                <div class="dash908-form-group">
+                    <label>Channel Type</label>
+                    <input id="editChanType">
+                    <div class="input-error" id="editChanTypeError" style="display:none;color:#c00;font-size:12px;margin-top:4px"></div>
+                </div>
+                <div class="dash908-form-group">
+                    <label>Description</label>
+                    <textarea id="editChanDesc" rows="3"></textarea>
+                    <div class="input-error" id="editChanDescError" style="display:none;color:#c00;font-size:12px;margin-top:4px"></div>
+                </div>
+                <div class="dash908-form-group">
+                    <label>Contact Email</label>
+                    <input type="email" id="editChanEmail">
+                    <div class="input-error" id="editChanEmailError" style="display:none;color:#c00;font-size:12px;margin-top:4px"></div>
+                </div>
+                <div class="dash908-form-group"><label>Profile Picture</label><input type="file" id="editChanPfp"
+                    accept="image/*">
+                    <div class="input-error" id="editChanPfpError" style="display:none;color:#c00;font-size:12px;margin-top:4px"></div>
+                </div>
+                <div class="dash908-form-group"><label>Channel Banner</label><input type="file" id="editChanBanner"
+                    accept="image/*">
+                    <div class="input-error" id="editChanBannerError" style="display:none;color:#c00;font-size:12px;margin-top:4px"></div>
+                </div>
+            </div>
+            <div style="text-align:right; margin-top:15px; display: flex; justify-content: flex-end;">
+                <button class="dash908-publish-btn" id="saveChanBtn">Save Changes</button>
+                <button class="dash908-cancel-btn modal-close-trigger">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="scripts/dashboard/dashboard.js"></script>
+    <script type="module">
+        import { userHasChannel } from './scripts/channelApi.js';
+        import { getAccessToken } from './scripts/auth.js';
+
+        const deleteTrigger = document.getElementById('deleteChannelTrigger');
+        const deleteModal = document.getElementById('deleteChannelModal');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+        function closeDeleteModal() {
+            deleteModal.classList.remove('show');
+        }
+
+        deleteTrigger?.addEventListener('click', (e) => {
+            e.preventDefault();
+            deleteModal.classList.add('show');
+        });
+
+        cancelDeleteBtn?.addEventListener('click', closeDeleteModal);
+        confirmDeleteBtn?.addEventListener('click', async () => {
+            const channelInfo = await userHasChannel();
+            const channelId = channelInfo?.channel?.channelId;
+            if (!channelId) {
+                alert('No channel found to delete.');
+                return;
+            }
+
+            const token = await getAccessToken();
+            if (!token) {
+                alert('Please sign in again.');
+                return;
+            }
+
+            confirmDeleteBtn.disabled = true;
+            confirmDeleteBtn.textContent = 'Deleting...';
+
+            try {
+                const res = await fetch('https://valviorabackend2.onrender.com/channelApi', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ channelId })
+                });
+
+                if (!res.ok) throw new Error('Delete failed');
+                localStorage.removeItem('myChannel');
+                window.location.replace('Velviora.html');
+            } catch (e) {
+                confirmDeleteBtn.disabled = false;
+                confirmDeleteBtn.textContent = 'Delete';
+                alert('Unable to delete channel right now.');
+            }
+        });
+        deleteModal?.addEventListener('click', (e) => {
+            if (e.target === deleteModal) closeDeleteModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDeleteModal();
+        });
+
+        async function verifyAndSyncChannel() {
+            try {
+                // If a channel was just created client-side, prefer that to avoid
+                // an immediate redirect while the backend may still be syncing.
+                const cached = JSON.parse(localStorage.getItem('myChannel') || 'null');
+                if (cached && cached.name) return;
+
+                const res = await userHasChannel();
+                if (res && res.exists && res.channel) {
+                    const c = res.channel;
+                    const payload = { name: c.channelname, desc: c.Description || '', contact: c.contactEmail || '', pfp: c.profilePicture || '', banner: c.channelBanner || '' };
+                    localStorage.setItem('myChannel', JSON.stringify(payload));
+                } else {
+                    // If user has no channel, redirect to creation page
+                    window.location.replace('createchannel.html');
+                }
+            } catch (e) { console.error('channel verify failed', e); }
+        }
+        window.addEventListener('DOMContentLoaded', verifyAndSyncChannel);
+        window.addEventListener('pageshow', verifyAndSyncChannel);
+    </script>
+</body>
+
+<script src="scripts/authGuard.js"></script>
+
+</html>

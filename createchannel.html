@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Channel</title>
+        <style id="auth-hide-style">html{visibility:hidden !important}</style>
+    <style>
+        :root {
+            --chann098-primary: #065fd4;
+            --chann098-bg: #f9f9f9;
+            --chann098-card: #ffffff;
+            --chann098-text: #0f0f0f;
+            --chann098-text-dim: #606060;
+            --chann098-border: #e5e5e5;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+        body { background: var(--chann098-bg); color: var(--chann098-text); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+
+        .chann098-container {
+            display: flex; flex-direction: column; width: 100%; max-width: 700px;
+            background: var(--chann098-card); padding: 40px; border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06); border: 1px solid var(--chann098-border);
+        }
+
+        .chann098-header { margin-bottom: 30px; display: flex; flex-direction: column; gap: 8px; }
+        .chann098-title { font-size: 28px; font-weight: 600; }
+        
+        .chann098-form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .chann098-label { font-size: 14px; font-weight: 500; }
+
+        .chann098-input, .chann098-select, .chann098-textarea {
+            padding: 12px 16px; border: 1px solid var(--chann098-border); border-radius: 8px;
+            font-size: 15px; outline: none; transition: border 0.2s;
+        }
+        .chann098-input:focus { border-color: var(--chann098-primary); }
+
+        /* OTP UI */
+        .chann098-otp-wrap { display: flex; gap: 10px; margin-top: 10px; }
+        .chann098-otp-box { 
+            width: 45px; height: 50px; text-align: center; font-size: 20px; 
+            font-weight: bold; border: 2px solid var(--chann098-border); border-radius: 6px; background: #f0f0f0;
+        }
+
+        .chann098-file-area {
+            border: 2px dashed var(--chann098-border); padding: 20px; border-radius: 10px;
+            text-align: center; background: #fafafa; cursor: pointer;
+        }
+        .chann098-hint { font-size: 12px; color: var(--chann098-text-dim); margin-top: 5px; }
+
+        .chann098-btn {
+            background: var(--chann098-primary); color: white; border: none;
+            padding: 14px; border-radius: 30px; font-size: 16px; font-weight: bold;
+            cursor: pointer; margin-top: 20px; transition: transform 0.2s;
+        }
+        .chann098-btn:hover { transform: translateY(-2px); background: #0556bf; }
+
+        .chann098-hidden { display: none !important; }
+
+        @media (max-width: 480px) {
+            .chann098-container { padding: 20px; }
+            .chann098-otp-box { width: 35px; height: 45px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="chann098-container">
+    <div class="chann098-header">
+        <h1 class="chann098-title">Create Channel</h1>
+        <p style="color:var(--chann098-text-dim)">Start your creator journey today.</p>
+    </div>
+
+    <form id="createForm" style="display:flex; flex-direction:column;">
+        <div class="chann098-form-group">
+            <label class="chann098-label js-channel-name">Channel Name</label>
+            <input type="text" id="cName" class="chann098-input" placeholder="e.g. My Awesome Tech" required maxlength="50" data-maxlen="50">
+        </div>
+
+        <div class="chann098-form-group">
+            <label class="chann098-label js-channel-type">Channel Type</label>
+            <select id="cType" class="chann098-select js-channel-select" data-maxlen="50">
+                <option value="brand">Brand Channel</option>
+                <option value="personal">Personal Channel</option>
+            </select>
+        </div>
+
+        
+
+        <div class="chann098-form-group">
+            <label class="chann098-label js-channel-description">Description</label>
+            <textarea id="cDesc" class="chann098-textarea" rows="3" maxlength="200" data-maxlen="200"></textarea>
+        </div>
+
+        <div class="chann098-form-group">
+            <label class="chann098-label js-channel-pfp">Profile Picture</label>
+            <input type="file" id="cPfp" accept="image/*" required>
+        </div>
+
+        <div class="chann098-form-group">
+            <label class="chann098-label js-channel-banner">Channel Banner (16:9 Recommended)</label>
+            <input type="file" id="cBanner" accept="image/*" required>
+            <p class="chann098-hint">Size: 1546 x 423 px</p>
+        </div>
+
+        <div class="chann098-form-group">
+            <label class="chann098-label js-channel-contact">Contact Email</label>
+            <input type="email" id="cContact" class="chann098-input" required maxlength="70" data-maxlen="70">
+        </div>
+
+        <button type="button" class="chann098-btn js-create-channel">Create Channel</button>
+    </form>
+</div>
+
+<script>
+    const typeSelect = document.getElementById('cType');
+    const personalSection = document.getElementById('personalSection');
+    const emailInput = document.getElementById('cEmail');
+    const otpWrapper = document.getElementById('otpWrapper');
+
+    // Keep personal selection behavior identical to brand (do not reveal extra email/OTP UI)
+    if (typeSelect) {
+        typeSelect.onchange = () => {
+            if (personalSection) personalSection.classList.add('chann098-hidden');
+        };
+    }
+
+    if (emailInput && otpWrapper) {
+        emailInput.oninput = () => {
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+            otpWrapper.classList.toggle('chann098-hidden', !isValid);
+        };
+    }
+
+    // Auto-focus OTP boxes
+    const otps = document.querySelectorAll('.chann098-otp-box');
+    otps.forEach((box, i) => {
+        box.onkeyup = (e) => {
+            if (e.key >= 0 && e.key <= 9 && i < otps.length-1 && otps[i+1]) otps[i+1].focus();
+            if (e.key === 'Backspace' && i > 0 && otps[i-1]) otps[i-1].focus();
+        };
+    });
+
+    // document.getElementById('createForm').onsubmit = async (e) => {
+    //     e.preventDefault();
+        
+    //     const toBase64 = file => new Promise((resolve) => {
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(file);
+    //         reader.onload = () => resolve(reader.result);
+    //     });
+
+    //     const channelData = {
+    //         name: document.getElementById('cName').value,
+    //         desc: document.getElementById('cDesc').value,
+    //         contact: document.getElementById('cContact').value,
+    //         pfp: await toBase64(document.getElementById('cPfp').files[0]),
+    //         banner: await toBase64(document.getElementById('cBanner').files[0])
+    //     };
+
+    //     localStorage.setItem('myChannel', JSON.stringify(channelData));
+    //     window.location.href = 'dashboard.html';
+    // };
+   
+</script>
+<script src="scripts/authGuard.js"></script>
+<script type="module" src="scripts/createChannel/createChannel.js"></script>
+</body>
+</html>

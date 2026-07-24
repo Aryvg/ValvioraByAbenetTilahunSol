@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velviora</title>
+    <link rel="icon" href="images/velviora-3.png" type="image/png">
+    <link rel="stylesheet" href="styles/YoutubeHomePage.css">
+    <link rel="stylesheet" href="styles/Resize.css">
+    <link rel="stylesheet" href="styles/Shorts.css">
+    <link rel="stylesheet" href="styles/notification.css">
+    <link rel="stylesheet" href="styles/shortsComment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/account.css">
+</head>
+    <style id="auth-hide-style">html{visibility:hidden !important}</style>
+<body>
+    <div class="youtube-header">
+        <div class="left-section">
+            <div class="menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="menus">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="menues">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <a href="Velviora.html" style="text-decoration: none; color:black" class="youtube-logo-container">
+                <img src="images/velviora-3.png" class="youtube-logo">
+                    <div class="youtube">Velviora</div>
+            </a>
+        </div>
+        <div class="middle-section">
+            <div class="search-container" style="position:relative">
+                <button class="search-buttons">
+                    <img src="images/149852.png" class="search-icon">
+                </button>
+                <input placeholder="Search" class="search-input js-search-input">
+                <button class="search-button" title="Search">
+                    <img src="images/149852.png" class="search-icon">
+                </button>
+            </div>
+            <div class="voice-search-container">
+                <button class="voice-search-button">
+                    <img src="images/709950.png" class="voice">
+                </button>
+                <div class="voice-search-text">Search with your voice</div>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="search-with-image good">
+                <div class="search-con">
+                    <img src="images/149852.png" class="search-icons">
+                </div>
+                <img src="images/709950.png" class="voices">
+            </div>
+            <button class="create-button">
+                <span class="plus">+</span>
+                <span class="create-text">Create</span>
+            </button>
+            <div class="notification-tooltip">
+                <div class="notification-container">
+                    <img class="notification-image" src="images/2529521.png">
+                    <div class="notification-number">9+</div>
+                </div>
+                <div class="notification-text">Notifications</div>
+            </div>
+            <div class="profile-button">
+                A
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="scripts/account/account.js"></script>
+    <script src="scripts/authGuard.js"></script>
+        <div class="search-containers" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(255,255,255,0.97); z-index:2000; align-items:center; justify-content:center;">
+            <div style="background:white; border-radius:16px; box-shadow:0 2px 16px rgba(0,0,0,0.08); padding:32px 24px; min-width:320px; max-width:90vw; display:flex; flex-direction:column; align-items:center;">
+                <input class="search-inputs2 js-full-search" placeholder="Search Shorts..." style="font-size:1.2em; padding:10px 16px; border-radius:8px; border:1px solid #ccc; width:100%; max-width:400px; margin-bottom:18px;">
+                <button class="search-full-button" style="padding:8px 18px; font-size:1em; border-radius:8px; background:#f00; color:white; border:none;">Search</button>
+                <button class="close-search-overlay" style="margin-top:18px; background:none; border:none; color:#333; font-size:1.1em; cursor:pointer;">Close</button>
+            </div>
+        </div>
+        <div class="short-video">
+    </div>
+
+    <div class="shorts-share-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:1000000; align-items:center; justify-content:center;">
+        <div class="shorts-share-modal" style="background:white; border-radius:12px; padding:20px; width:90%; max-width:420px;">
+            <div class="shorts-share-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <span style="font-weight:600; font-size:1.1em;">Share</span>
+                <div class="shorts-share-close" style="cursor:pointer; font-size:20px; line-height:1;">&#10005;</div>
+            </div>
+            <div class="shorts-share-url-row" style="display:flex; gap:8px;">
+                <input type="text" class="shorts-share-url-input" readonly style="flex:1; padding:8px 10px; border:1px solid #ccc; border-radius:8px;">
+                <button class="shorts-share-copy-btn" style="padding:8px 16px; border:none; border-radius:8px; background:#065fd4; color:white; cursor:pointer;">Copy</button>
+            </div>
+        </div>
+    </div>
+
+<div class="moving-sidebar"></div>
+<div class="menues-main-container">
+    
+</div>
+
+
+     <div class="noti896g-wrapper">
+        <div class="noti896g-header">
+            <span class="noti896g-header-title">Notifications</span>
+            <div class="noti896g-settings-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+        </div>
+
+        <div class="noti896g-content-area" id="notificationList">
+            </div>
+    </div>
+    <div id="accou786-root"></div>
+
+<!-- <button class="co67g-open-btn">Open Comments</button> -->
+
+    <div class="co67g-overlay">
+        <div class="co67g-modal">
+            <div class="co67g-header">
+                                <div class="co67g-header-title">
+                                        Comments <span class="co67g-total-count" id="co67g-main-count">0</span>
+                                </div>
+                                <div class="co67g-close-x" title="Close" style="margin-left:auto;display:flex;align-items:center;cursor:pointer;font-size:22px;">
+                                    <!-- Unicode X icon for clarity and fallback -->
+                                    <span aria-label="Close" style="display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;">&#10005;</span>
+                                </div>
+            </div>
+
+            <div class="co67g-scroll-area" id="co67g-list">
+                <div class="co67g-empty-state">No comments yet. Be the first to share your thoughts!</div>
+            </div>
+
+            <div class="co67g-footer">
+                <div class="co67g-input-container">
+                    <div class="co67g-user-img">A</div>
+                    <div style="flex:1">
+                        <input type="text" class="co67g-field" id="co67g-main-input" placeholder="Add a comment...">
+                        <div class="co67g-actions-group" id="co67g-main-actions">
+                            <button class="co67g-btn-base co67g-cancel" id="co67g-main-cancel">Cancel</button>
+                            <button class="co67g-btn-base co67g-submit" id="co67g-main-post">Comment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="module" src="scripts/account/accountDropdown.js"></script>
+    <script type="module" src="scripts/account/account.js"></script>
+    <script type="module" src="scripts/notification/notification.js"></script>
+    <script type="module" src="scripts/YouTubeHomePage/YouTubeHomePage.js"></script>
+    <script type="module" src="scripts/Shorts/shorts.js"></script>
+    <script type="module" src="scripts/Shorts/shortsComment.js"></script>
+</body>
+
+</html>

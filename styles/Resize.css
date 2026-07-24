@@ -1,0 +1,135 @@
+/*
+@media (max-width:707px){
+    .youtube-header{
+        display:none;
+    }
+    .middle-sections{
+        display:flex;
+    }
+    .next-container{
+        margin-top:25px;
+    }
+}
+*/
+
+@media (max-width:1083px){
+    .thumbnail-main-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width:760px){
+    .thumbnail-main-container {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width:709px) and (min-width:525px) {
+    .middle-sections {
+        margin-left: 30px;
+    }
+}
+
+@media (max-width:707px) {
+
+    .search-with-image {
+        display: flex;
+    }
+
+    .middle-section {
+        display: none;
+    }
+
+    .right-section {
+        width: 280px;
+        margin-right: 70px;
+    }
+
+    body {
+        margin-left: 25px;
+        margin-right: 10px;
+    }
+}
+
+@media (max-width:540px) {
+    .profile-button {
+        display: none;
+    }
+
+    .voices {
+        display: none;
+    }
+
+    .right-section {
+        width: 190px;
+    }
+
+    .next-container {
+        margin-top: 15px;
+        margin-left: 30px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .next-image-left {
+        left: 17px;
+    }
+
+    .down-bar-container {
+        display: flex;
+    }
+
+    .menu {
+        margin-bottom:7px;
+    }
+
+    .left-contained {
+        background-color: white;
+        width: 90px;
+        position: fixed;
+        top: 68px;
+        left: -50px;
+        height: 36px;
+        z-index: 1000;
+    }
+
+    .left-contained {
+        width: 73px;
+    }
+
+    .next-image-left {
+        position: fixed;
+        top: 68.54px;
+        left: 10px;
+        z-index: 99999;
+    }
+
+    .menu {
+        margin-top: 4px;
+    }
+
+    .thumbnail-main-container {
+        margin-left: 5px;
+    }
+    .middle-sections{
+        margin-left:35px;
+    }
+}
+
+@media (max-width:425px) {
+    .create-button {
+        display: none;
+    }
+
+    .right-section {
+        width: 70px;
+    }
+
+    .notification-image {
+        margin-top: 5px;
+    }
+
+    .notification-number {
+        top: 1px;
+    }
+}

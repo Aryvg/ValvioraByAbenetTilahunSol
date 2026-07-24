@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" style="visibility:hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velviora</title>
+    <link rel="icon" href="images/velviora-3.png" type="image/png">
+    <script>
+        // Early synchronous check: call /refresh synchronously to avoid any flash.
+        // This blocks rendering briefly but prevents showing the index when user is logged in.
+        (function(){
+            try { document.documentElement.style.visibility = 'hidden'; } catch(e){}
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'https://valviorabackend2.onrender.com/refresh', false); // synchronous
+                xhr.withCredentials = true;
+                xhr.send(null);
+                if (xhr.status === 200) {
+                    // authenticated
+                    window.location.replace('Velviora.html');
+                    return;
+                }
+            } catch (e) {
+                // network or CORS error — fallthrough to show page
+            }
+            try { document.documentElement.style.visibility = ''; } catch(e){}
+        })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <style>
+        /* Ensuring new forms follow your existing styling patterns */
+        .hidden { display: none !important; }
+        /* Success modal styles */
+        .success-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.35);
+            z-index: 9999;
+            padding: 20px;
+        }
+        .success-modal.show { display: flex; }
+        .success-modal .modal {
+            width: 100%;
+            max-width: 520px;
+            background: linear-gradient(135deg,#f6fffa,#e6ffef);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(2,48,34,0.12);
+            padding: 28px 28px;
+            text-align: center;
+            color: #044d36;
+            transform: translateY(-8px);
+            transition: transform .22s ease, opacity .22s ease;
+        }
+        .success-modal .icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: linear-gradient(180deg,#ffffff,#e6fff0);
+            box-shadow: 0 6px 18px rgba(4,77,54,0.08);
+            color: #0a6b3a;
+            font-size: 34px;
+        }
+        .success-modal h3 { margin: 8px 0 6px; font-size: 20px; }
+        .success-modal p { margin: 0 0 16px; color: #085c3d; font-size: 15px; }
+        .success-modal .actions { display:flex; gap:12px; justify-content:center; }
+        .success-modal .btn { padding:10px 16px; border-radius:8px; border:0; cursor:pointer; font-weight:600 }
+        .success-modal .btn.primary { background: linear-gradient(90deg,#16a34a,#059669); color:#fff }
+        .success-modal .btn.ghost { background:transparent; color:#044d36 }
+
+        @media (max-width: 420px) {
+            .success-modal .modal { padding: 18px; border-radius: 12px; }
+            .success-modal h3 { font-size: 18px }
+            .success-modal p { font-size: 14px }
+        }
+        @media (max-width: 320px) {
+            .success-modal .modal { max-width: 300px; padding: 14px; }
+            .success-modal .icon { width:56px; height:56px; font-size:28px }
+            .success-modal h3 { font-size: 16px }
+            .success-modal p { font-size: 13px }
+            .success-modal .actions { flex-direction: column; }
+            .success-modal .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="auth-card" id="authCard">
+        <div class="logo-section">
+            <!-- <i class="fab fa-youtube"></i> -->
+             <img
+             style="width: 200px; height: auto; margin-right:10px; margin-bottom: 0px;"
+             src="images/velviora-2.png"/>
+            <h1 id="formTitle">Sign in</h1>
+            <p id="formSubTitle">to continue to Velviora</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label>Email</label>
+                <input type="text" placeholder="Your email" id="loginUser">
+                <div style="margin-top:5px;" class="username-login-msg"><i class="fas fa-exclamation-circle"></i>  Email is required</div>
+            </div>
+          
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="••••••••" id="loginPass">
+                <div style="margin-top:5px;" class="password-login-msg"><i class="fas fa-exclamation-circle"></i> Password is required</div>
+            </div>
+            <div class="notfound"></div>
+            <div class="btn-container">
+                <button type="button" class="text-btn" id="createAccountBtn">Create account</button>
+                <button type="button" class="text-btn" id="forgotPasswordBtn">Forgot password</button>
+                <button type="submit" class="primary-btn js-login-button">login</button>
+            </div>
+        </form>
+
+
+        <form id="signupForm" style="display: none;">
+            <div class="form-grid">
+                <div class="profile-upload">
+                    <div class="profile-preview" id="pfpPreview">
+                        <i class="fas fa-camera" style="font-size: 30px; color: #bbb;"></i>
+                    </div>
+                    <label class="upload-btn">
+                        <i class="fas fa-plus"></i> Add Profile Photo
+                        <input type="file" id="pfpInput" hidden accept="image/*">
+                    </label>
+                    <div id="profile-error"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>First name</label>
+                    <input type="text" id="fname" placeholder="Abenet">
+                    <div id="first-msg"></div>
+                </div>
+                <div class="input-group">
+                    <label>Last name</label>
+                    <input type="text" id="lname" placeholder="Tilahun">
+                    <div id="last-msg"></div>
+                </div>
+                <div class="input-group">
+                    <label>Age</label>
+                    <input type="number" id="age" placeholder="21">
+                    <div id="age-msg"></div>
+                </div>
+                <div class="input-group">
+                    <label>Country</label>
+                    <select id="country">
+                        <option value="">Choose...</option>
+                    </select>
+                    <div id="country-msg"></div>
+                </div>
+
+                <div class="input-group full-width">
+                    <label>Email</label>
+                    <input type="text" id="email" placeholder="abenet_dev">
+                    <div id="email-msg"></div>
+                </div>
+                <!-- <div class="input-group full-width">
+                    <label>email</label>
+                    <input type="text" placeholder="Your email" id="signupEmail">
+                    <div class="error-msg"><i class="fas fa-exclamation-circle"></i> email is required</div>
+                </div> -->
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Create password">
+                    <div id="password-msg"></div>
+                </div>
+                <div class="input-group">
+                    <label>Confirm</label>
+                    <input type="password" id="confirm" placeholder="Repeat password">
+                    <div id="confirm-msg"></div>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="text-btn" id="signInInsteadBtn">Sign in instead</button>
+                <button type="submit" class="primary-btn js-create-account-button">Create Account</button>
+            </div>
+        </form>
+
+        <form id="forgotPasswordForm" style="display: none;">
+            <div class="input-group">
+                <label>Email or Phone</label>
+                <input type="email" placeholder="Enter your recovery email" id="recoveryEmail">
+                <p style="font-size: 13px; color: #5f6368; margin-top: 8px;">Enter the email address associated with your account and we'll send a magic link to reset your password.</p>
+                <div class="error-msg">Enter a valid email address</div>
+            </div>
+            <div class="btn-container">
+                <button type="button" class="text-btn" id="backToSignInBtn">Back</button>
+                <button type="submit" class="primary-btn js-send-link-btn">Send Link</button>
+            </div>
+        </form>
+
+        <form id="resetPasswordForm" style="display: none;">
+            <div class="input-group">
+                <label>New Password</label>
+                <input type="password" id="newPass" placeholder="Create new password">
+                <div class="error-msg">Enter a strong password</div>
+            </div>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmNewPass" placeholder="Repeat new password">
+                <div class="error-msg">Passwords do not match</div>
+            </div>
+            <div class="btn-container">
+                <div></div> <button type="submit" class="primary-btn">Reset Password</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="modal-overlay" id="verifyModal">
+        <div class="modal">
+            <i class="fas fa-user-check"></i>
+            <h2>Verify your identity</h2>
+            <p>We've sent a 6-digit verification code to your email. Enter it below to finish.</p>
+            
+            <div class="input-group">
+                <input type="text" placeholder="000000" id="verifyCode" maxlength="6" style="text-align: center; font-size: 24px; letter-spacing: 8px;">
+                <div class="error-msg" id="modalError">Please enter the code</div>
+            </div>
+
+            <button class="primary-btn" style="width: 100%;" id="completeRegistrationBtn">Complete Registration</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="resetVerifyModal" style="display:none;">
+        <div class="modal">
+            <i class="fas fa-envelope-open"></i>
+            <h2>Enter verification code</h2>
+            <p>We've sent a 6-digit verification code to your recovery email. Enter it below to continue.</p>
+
+            <div class="input-group">
+                <input type="text" placeholder="000000" id="resetVerifyCode" maxlength="6" style="text-align: center; font-size: 24px; letter-spacing: 8px;">
+                <div class="error-msg" id="resetModalError">Please enter the code</div>
+            </div>
+
+            <div style="display:flex;gap:12px;margin-top:12px;">
+                <button class="text-btn" id="cancelResetVerifyBtn" style="flex:1;border-radius:6px;">Cancel</button>
+                <button class="primary-btn" id="confirmResetCodeBtn" style="flex:1;border-radius:6px;">Verify & Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success modal shown after password reset -->
+    <div class="success-modal" id="successModal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-labelledby="successModalTitle" aria-describedby="successModalDesc">
+            <div class="icon" aria-hidden="true">✓</div>
+            <h3 id="successModalTitle">Password reset successful</h3>
+            <p id="successModalDesc">You have successfully reset your password.</p>
+            <div class="actions">
+                <button class="btn primary" id="successModalCloseBtn">Continue to sign in</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="scripts/index/index.js"></script>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        const resetPasswordForm = document.getElementById('resetPasswordForm');
+        
+        const formTitle = document.getElementById('formTitle');
+        const formSubTitle = document.getElementById('formSubTitle');
+
+        // Show Sign Up
+        document.getElementById('createAccountBtn').addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+            formTitle.innerText = 'Create Account';
+            formSubTitle.innerText = 'to continue to Youtube';
+        });
+
+        // Show Sign In from Sign Up
+        document.getElementById('signInInsteadBtn').addEventListener('click', () => {
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'block';
+            formTitle.innerText = 'Sign in';
+        });
+
+        // Show Forgot Password
+        document.getElementById('forgotPasswordBtn').addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            forgotPasswordForm.style.display = 'block';
+            formTitle.innerText = 'Account recovery';
+            formSubTitle.innerText = 'Enter your recovery email';
+        });
+
+        // Back to Sign In from Forgot Password
+        document.getElementById('backToSignInBtn').addEventListener('click', () => {
+            forgotPasswordForm.style.display = 'none';
+            loginForm.style.display = 'block';
+            formTitle.innerText = 'Sign in';
+            formSubTitle.innerText = 'to continue to Youtube';
+        });
+
+        // Reset verify modal handlers
+        const cancelResetVerifyBtn = document.getElementById('cancelResetVerifyBtn');
+        if (cancelResetVerifyBtn) cancelResetVerifyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const resetVerifyModal = document.getElementById('resetVerifyModal');
+            if (resetVerifyModal) resetVerifyModal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

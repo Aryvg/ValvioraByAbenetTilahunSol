@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This is the shorts page</title>
+    <link rel="stylesheet" href="styles/YoutubeHomePage.css">
+    <link rel="stylesheet" href="styles/Resize.css">
+    <link rel="stylesheet" href="styles/Shorts.css">
+    <link rel="stylesheet" href="styles/channel.css">
+     <link rel="stylesheet" href="styles/notification.css">
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/account.css">
+</head>
+    <style id="auth-hide-style">html{visibility:hidden !important}</style>
+
+<body>
+    <div class="youtube-header">
+        <div class="left-section">
+            <div class="menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="menus">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="menues">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <a href="Velviora.html" style="text-decoration: none; color:black" class="youtube-logo-container">
+                <img src="images/1384060.png" class="youtube-logo">
+                <div class="youtube">YouTube</div>
+            </a>
+        </div>
+        <div class="middle-section">
+            <div class="search-container" style="position:relative">
+                <button class="search-buttons">
+                    <img src="images/149852.png" class="search-icon">
+                </button>
+                <input placeholder="Search" class="search-input js-search-input">
+                <button class="search-button" title="Search">
+                    <img src="images/149852.png" class="search-icon">
+                </button>
+            </div>
+            <div class="voice-search-container">
+                <button class="voice-search-button">
+                    <img src="images/709950.png" class="voice">
+                </button>
+                <div class="voice-search-text">Search with your voice</div>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="search-with-image good">
+                <div class="search-con">
+                    <img src="images/149852.png" class="search-icons">
+                </div>
+                <img src="images/709950.png" class="voices">
+            </div>
+            <button class="create-button">
+                <span class="plus">+</span>
+                <span class="create-text">Create</span>
+            </button>
+            <div class="notification-tooltip">
+                <div class="notification-container">
+                    <img class="notification-image" src="images/2529521.png">
+                    <div class="notification-number">9+</div>
+                </div>
+                <div class="notification-text">Notifications</div>
+            </div>
+            <button class="profile-button">
+                A
+            </button>
+        </div>
+    </div>
+
+    <div class="search-containers"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(255,255,255,0.97); z-index:2000; align-items:center; justify-content:center;">
+        <div
+            style="background:white; border-radius:18px; box-shadow:0 4px 32px rgba(0,0,0,0.13); padding:38px 28px 28px 28px; min-width:320px; max-width:92vw; display:flex; flex-direction:column; align-items:center; gap:0.5em;">
+            <input class="search-inputs2 js-full-search" placeholder="Search History...">
+            <button class="search-full-button"
+                style="padding:10px 0; width:100%; max-width:400px; font-size:1.08em; border-radius:8px; background:linear-gradient(90deg,#ff5252,#ff1744); color:white; border:none; font-weight:600; letter-spacing:0.03em; margin-bottom:10px; box-shadow:0 2px 8px rgba(255,23,68,0.08); transition:background 0.18s;">Search</button>
+            <button class="close-search-overlay"
+                style="padding:8px 0; width:100%; max-width:400px; background:linear-gradient(90deg,#f5f5f5,#e0e0e0); border:none; color:#444; font-size:1.05em; border-radius:8px; font-weight:500; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.04);">Cancel</button>
+        </div>
+    </div>
+    
+   
+
+    <div class="moving-sidebar" style="display:block">
+        <div class="upper-part">
+            <div class="moving-sidebar-container">
+                <img src="images/1946436.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Home</div>
+            </div>
+            <a class="moving-sidebar-container" href="Shorts.html" style="
+            margin-left:3.5px;
+            text-decoration: none;
+            ">
+                <img src="images/images.jpeg" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Shorts</div>
+            </a>
+            <div class="moving-sidebar-container">
+                <img src="images/2989849.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Subscriptions</div>
+            </div>
+        </div>
+        <div class="middle-part">
+            <div class="moving-sidebar-container">
+                <div class="moving-sidebar-text you">You</div>
+                <img src="images/130884.png" class="moving-sidebar-images">
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/3503786.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">History</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/4043797.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Playlists</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/2991195.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Your videos</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/15469061.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Watch later</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/126473.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Liked videos</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/541957.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Your clips</div>
+            </div>
+        </div>
+        <div class="Subscriptions">
+            <div class="moving-sidebar-container">
+                <div class="moving-sidebar-text-sub">Subscriptions</div>
+                <img src="images/130884.png" class="moving-sidebar-images">
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/images (1).jpeg" class="movin-sidebar-image">
+                <a href="channel.html" 
+                style="text-decoration: none; color:inherit;"
+                class="moving-sidebar-text">SuperSimpleDev</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/images (2).jpeg" class="movin-sidebar-image">
+                <a href="channel.html" 
+                style="text-decoration: none; color:inherit;"
+                class="moving-sidebar-text">Fun always</a>
+            </div>
+            <div class="moving-sidebar-container show">
+                <img src="images/10927659.png" class="moving-sidebar-images yes">
+                <div class="moving-sidebar-text">Show More</div>
+            </div>
+        </div>
+        <div class="Explore">
+            <div class="moving-sidebar-container">
+                <img src="images/727218.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Music</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/2989838.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Live</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/7786362.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Gaming</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/81460.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">News</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/1152912.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Sports</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/4717385.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Learning</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/1254599.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Fashion</div>
+            </div>
+        </div>
+        <div class="More">
+            <div class="moving-sidebar-container">
+                <div class="moving-sidebar-text morey">More from YouTube</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/4138134.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">YouTube Studio</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/720320.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">YouTube Kids</div>
+            </div>
+        </div>
+        <div class="last">
+            <div class="moving-sidebar-container">
+                <img src="images/2040504.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Settings</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/2814368.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Report History</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/471664.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Help</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/11213138.png" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Send Feedback</div>
+            </div>
+        </div>
+        <div class="last" style="border:none">
+            <div class="moving-sidebar-container">
+                <div class="last-text">About Press Copyright Contact us CreatorsAdvertise Developers</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <div class="last-text">Terms Privacy Policy & Safety How YouTube works Test
+                    <br> new features
+                </div>
+            </div>
+            <div class="moving-sidebar-container">
+                <div class="last-text">© 2025 Google LLC</div>
+            </div>
+        </div>
+    </div>
+
+     <main class="channel987-main-content">
+            <div class="channel987-banner">
+                <!-- <div style="color: white; font-size: 60px; font-weight: 100;">ellen</div> -->
+                 <!-- https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80 -->
+                 <img src="images/banner.png" style="width:100%; 
+                 border-radius:20px;
+                 height:100%; object-fit:fill;">
+            </div>
+
+            <section class="channel987-profile-info">
+                <div class="channel987-main-avatar">
+                    <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=160&q=80" style="width:100%; height:100%; object-fit:fill;">
+                </div>
+                <div class="channel987-channel-details">
+                    <h1>TheEllenShow ✔️</h1>
+                    <div style="color:#606060; font-size:14px;">@TheEllenShow • 38M subscribers • 18K videos</div>
+                    <button class="channel987-subscribe-btn">🔔 Subscribed ∨</button>
+                </div>
+            </section>
+
+            <nav class="channel987-nav-wrapper">
+                <ul class="channel987-tabs">
+                    <li class="channel987-tab-item channel987-tab-active">Home</li>
+                    <li class="channel987-tab-item">Videos</li>
+                    <li class="channel987-tab-item">Shorts</li>
+                    <li class="channel987-tab-item">Playlists</li>
+                </ul>
+            </nav>
+
+            <section class="channel987-featured-section">
+                <div class="channel987-featured-thumb">
+                    <img src="https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?auto=format&fit=crop&w=500&q=80" style="width:100%; height:100%; object-fit:fill;">
+                </div>
+                <div>
+                    <h3 style="margin-bottom:8px;">The 'Apparently' Kid But He Gets Funnier With Every Visit</h3>
+                    <p style="color:#606060; font-size:13px;">1.6M views • 4 months ago</p>
+                </div>
+            </section>
+
+            <section class="channel987-shelf">
+                <div class="channel987-shelf-title">🎞️ Trending Now <span style="font-size:12px; font-weight:normal; color:#606060; margin-left:10px;">▶ Play all</span></div>
+                <div class="channel987-grid" id="channel987-shorts-container">
+                    </div>
+            </section>
+
+            <section class="channel987-shelf">
+                <div class="channel987-shelf-title">Videos</div>
+                <div class="channel987-grids" id="channel987-videos-container">
+                    </div>
+            </section>
+             <!-- <div class="channel987-shelf-title" style="margin-left:1000px;">playlist</div> -->
+             <div class="playgf-71-playlist-grid" id="playlistGrid" style="display:none;">
+            </div>
+        </main>
+
+
+        
+
+    <div class="menues-main-container">
+
+    </div>
+
+   
+     <div class="noti896g-wrapper">
+        <div class="noti896g-header">
+            <span class="noti896g-header-title">Notifications</span>
+            <div class="noti896g-settings-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+        </div>
+
+        <div class="noti896g-content-area" id="notificationList">
+            </div>
+    </div>
+   
+    <div class="accou786-wrapper">
+        <div class="accou786-header">
+            <div class="accou786-avatar-big">A</div>
+            <div class="accou786-meta-data">
+                <span class="accou786-user-name">Abenet Tilahun</span>
+                <span class="accou786-user-handle">@abenettilahun9658</span>
+                <a class="accou786-view-link">View your channel</a>
+            </div>
+        </div>
+
+        <hr class="accou786-divider">
+
+        <div id="accou786-menu-container">
+            </div>
+    </div>
+
+    <script type="module" src="scripts/account/account.js"></script>
+     <script src="scripts/authGuard.js"></script>
+     <script type="module" src="scripts/notification/notification.js"></script>
+
+     <script type="module" src="scripts/channelPage/channelPage.js"></script>
+</body>
+
+</html>
+
+
+<!-- Here is what i want you to do for me. i want you to create for me a youtube page where people can create channel. and in it include the following. i want the person who wants to create a channel to be asked channel name with input, channel type(for this, what i want to come is a select button making the person choose between personal channel and brand channel)-if the person selects personal channel, let it ask him to fill his email in new input checking the email is valid and sending verification number to the email and asking it to fill it. but if he selects brand channel, let it not ask him email related stuff. let the page also ask the person to fill dsecription( like a short info about the channel) and let it also ask him to insert channel profile from his device(so create a choose file button to pick file from the device)- and let it recommend the persont o insert a profile that is valid or that can fit in.  let it also ask him to insert channel art or banner from his device(so create a choose file button to pick file from the device)- let the image he will insert here be recommended to be aspect ratio of 16:9 and size of 1546 times 423 pixel. and let the person be asked to insert contact email at the end. as he creates a channel created button, let it bring him some page that shows him the channel he created in a beautiful and dynamic and interactive way. do this with html, css and javascript-make it so beautiful, dynamic and modern and interactive. and let this website be responsive on all devices-upto 320px. and let each lass have infrot of it chann098-. and do it in a very good and amazing way. and use flexbox in all of the things you build. -->

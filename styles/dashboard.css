@@ -1,0 +1,148 @@
+  
+        :root {
+            --bg-main: #ffffff;
+            --bg-secondary: #f9f9f9;
+            --header-bg: #ffffff;
+            --sidebar-bg: #ffffff;
+            --border-color: #e5e5e5;
+            --text-main: #0f0f0f;
+            --text-grey: #606060;
+            --yt-blue: #065fd4;
+            --yt-red: #cc0000;
+            --hover-grey: #f2f2f2;
+            --header-height: 56px;
+            --sidebar-width: 240px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        
+        body { 
+            background: var(--bg-main); 
+            color: var(--text-main); 
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* --- Layout Transitions --- */
+        #sidebar, main { transition: transform 0.3s ease, margin-left 0.3s ease, width 0.3s ease; }
+
+        /* --- Header --- */
+        header {
+            position: fixed; top: 0; width: 100%; height: var(--header-height);
+            background: var(--header-bg); display: flex; justify-content: space-between; 
+            align-items: center; padding: 0 16px; z-index: 1001; border-bottom: 1px solid var(--border-color);
+        }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .studio-logo { font-size: 18px; font-weight: bold; text-decoration: none; color: var(--text-main); display: flex; align-items: center; }
+        .studio-logo i { color: red; margin-right: 4px; font-size: 24px; }
+        
+        .search-bar { 
+            background: #ffffff; border: 1px solid #ccc; padding: 6px 12px; 
+            border-radius: 40px; width: 40%; display: flex; align-items: center; 
+        }
+        .search-bar input { background: transparent; border: none; color: black; width: 100%; outline: none; }
+
+        .btn-create {
+            background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); 
+            padding: 8px 16px; border-radius: 20px; font-weight: 500; cursor: pointer; 
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-create:hover { background: var(--hover-grey); }
+
+        /* --- Sidebar --- */
+        nav {
+            width: var(--sidebar-width); background: var(--sidebar-bg);
+            margin-top: var(--header-height); height: calc(100vh - var(--header-height));
+            flex-shrink: 0; overflow-y: auto; z-index: 1000; padding-right: 8px;
+        }
+        
+        body.sidebar-hidden nav { width: 0; transform: translateX(-100%); }
+        body.sidebar-hidden main { margin-left: 0; }
+
+        .nav-section { border-bottom: 1px solid var(--border-color); padding: 12px 0; }
+        .nav-section-title { padding: 0 24px 8px; font-size: 14px; font-weight: 500; color: var(--text-main); }
+        
+        .nav-link {
+            display: flex; align-items: center; padding: 10px 24px; 
+            color: var(--text-main); text-decoration: none; font-size: 14px; border-radius: 10px; margin: 0 8px;
+        }
+        .nav-link:hover { background: var(--hover-grey); }
+        .nav-link i { margin-right: 24px; width: 20px; text-align: center; font-size: 18px; }
+        
+        .sidebar-footer { padding: 16px 24px; font-size: 12px; color: var(--text-grey); line-height: 1.6; }
+
+        /* --- Main Content --- */
+        main { flex-grow: 1; margin-top: var(--header-height); padding: 24px; overflow-y: auto; width: 100%; }
+
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .card { background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        
+        /* --- DYNAMIC RESPONSIVE TABLE (NO SCROLLBAR) --- */
+        .table-container { width: 100%; border: 1px solid var(--border-color); border-radius: 8px; background: white; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); color: var(--text-grey); font-size: 12px; text-transform: uppercase; }
+        td { padding: 16px 12px; border-bottom: 1px solid var(--border-color); font-size: 14px; vertical-align: top; }
+        
+        .video-cell { display: flex; align-items: center; gap: 12px; }
+        .thumb-mini { width: 100px; height: 56px; object-fit: cover; border-radius: 6px; background: #eee; flex-shrink: 0; }
+        .desc-text { font-size: 13px; color: var(--text-grey); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* Actions */
+        .action-group { display: flex; gap: 8px; }
+        .btn-action { border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; transition: 0.2s; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; }
+        .btn-edit { color: var(--yt-blue); }
+        .btn-edit:hover { background: #e7f3ff; }
+        .btn-delete { color: var(--yt-red); }
+        .btn-delete:hover { background: #fff1f1; }
+
+        /* --- TABLE BREAKPOINT (STACKING MODE) --- */
+        @media screen and (max-width: 850px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; } /* Hide headers */
+            tr { border-bottom: 2px solid var(--border-color); padding: 10px 0; position: relative; }
+            td { border: none; position: relative; padding-left: 40%; padding-bottom: 10px; min-height: 40px; }
+            td:before { 
+                position: absolute; left: 12px; width: 35%; padding-right: 10px; 
+                white-space: nowrap; font-weight: bold; color: var(--text-grey); font-size: 12px;
+                content: attr(data-label);
+            }
+            .video-cell { padding-left: 0; margin-bottom: 10px; }
+            td[data-label="Video"] { padding-left: 12px; }
+            td[data-label="Video"]:before { content: ""; } /* No label for the main video thumb */
+            .desc-text { -webkit-line-clamp: 3; }
+        }
+
+        /* Mobile Overlay */
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: none; z-index: 999; }
+        .sidebar-overlay.active { display: block; }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center;
+            z-index: 2000; overflow-y: auto; padding: 20px;
+        }
+        .modal {
+            background: #ffffff; width: 100%; max-width: 700px; border-radius: 12px; display: flex; 
+            flex-direction: column; max-height: 90vh; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .modal-content { overflow-y: auto; flex-grow: 1; }
+        .upload-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .upload-tabs button { background: #eee; border: none; color: black; padding: 8px 14px; cursor: pointer; border-radius: 4px; flex: 1; font-weight: 500; }
+        .upload-tabs button.active { background: #000; color: #fff; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; margin-bottom: 5px; color: var(--text-grey); font-size: 13px; font-weight: 500; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; background: #fff; border: 1px solid #ccc; border-radius: 4px; outline: none; }
+        .drop-zone { border: 2px dashed #ccc; padding: 30px; text-align: center; border-radius: 8px; margin-bottom: 15px; background: var(--bg-secondary); }
+        .preview-video { width: 100%; margin-top: 10px; border-radius: 4px; }
+        .publish-btn { background: var(--yt-blue); border: none; padding: 10px 24px; font-weight: bold; cursor: pointer; border-radius: 4px; color: #fff; }
+        .cancel-btn { background: #eee; color: #000; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin-left: 10px; }
+
+        @media(max-width: 992px) {
+            nav { position: fixed; top: 0; left: 0; height: 100%; transform: translateX(-100%); margin-top: 0; padding-top: var(--header-height); }
+            nav.open { transform: translateX(0); }
+            main { margin-left: 0 !important; }
+            .search-bar { display: none; }
+        }
+    

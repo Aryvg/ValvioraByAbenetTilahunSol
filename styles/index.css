@@ -1,0 +1,308 @@
+ :root {
+     --yt-blue: #065fd4;
+     --yt-red: #cc0000;
+     --text-main: #0f0f0f;
+     --text-grey: #606060;
+     --border-color: #dadce0;
+     --error-red: #d93025;
+     --glass-bg: rgba(255, 255, 255, 0.95);
+ }
+
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Roboto', sans-serif;
+ }
+
+ body {
+     /* Modern Abstract Background Image */
+     background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
+         url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+     background-size: cover;
+     background-position: center;
+     background-attachment: fixed;
+     color: var(--text-main);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     min-height: 100vh;
+     padding: 20px;
+ }
+
+ /* Fade-in Animation */
+ @keyframes fadeIn {
+     from {
+         opacity: 0;
+         transform: translateY(20px);
+     }
+
+     to {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+
+ /* --- Auth Container (Glass Effect) --- */
+ .auth-card {
+     background: var(--glass-bg);
+     width: 100%;
+     max-width: 450px;
+     padding: 40px;
+     border-radius: 16px;
+     border: 1px solid rgba(255, 255, 255, 0.3);
+     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+     backdrop-filter: blur(10px);
+     animation: fadeIn 0.6s ease-out;
+     transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+ }
+
+ .auth-card.signup-mode {
+     max-width: 650px;
+ }
+
+ .logo-section {
+     text-align: center;
+     margin-bottom: 24px;
+ }
+
+ .logo-section i {
+     color: red;
+     font-size: 40px;
+     margin-bottom: 12px;
+ }
+
+ .logo-section h1 {
+     font-size: 26px;
+     font-weight: 500;
+     letter-spacing: -0.5px;
+ }
+
+ .logo-section p {
+     color: var(--text-grey);
+     margin-top: 8px;
+     font-size: 16px;
+ }
+
+ /* --- Form Elements --- */
+ .form-grid {
+     /* display: grid; */
+     /* grid-template-columns: 1fr; */
+     display:flex;
+     flex-direction:column;
+     gap: 20px;
+ }
+
+ .full-width {
+     grid-column: span 2;
+ }
+
+ .input-group {
+     margin-bottom: 18px;
+     position: relative;
+ }
+
+ .input-group label {
+     display: block;
+     font-size: 13px;
+     font-weight: 600;
+     margin-bottom: 6px;
+     color: var(--text-main);
+     text-transform: uppercase;
+     letter-spacing: 0.5px;
+ }
+
+ input,
+ select {
+     width: 100%;
+     padding: 14px;
+     border: 1px solid var(--border-color);
+     border-radius: 8px;
+     font-size: 15px;
+     outline: none;
+     background: white;
+     transition: all 0.2s ease;
+ }
+
+ input:focus,
+ select:focus {
+     border: 2px solid var(--yt-blue);
+     box-shadow: 0 0 0 4px rgba(6, 95, 212, 0.1);
+ }
+
+ .error-msg {
+     color: var(--error-red);
+     font-size: 12px;
+     margin-top: 6px;
+     display: none;
+     align-items: center;
+     gap: 5px;
+     font-weight: 500;
+ }
+
+ /* --- Profile Picture Style --- */
+ .profile-upload {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     margin-bottom: 10px;
+     grid-column: span 2;
+ }
+
+ .profile-preview {
+     width: 90px;
+     height: 90px;
+     border-radius: 50%;
+     background: #f1f1f1;
+     margin-bottom: 12px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     overflow: hidden;
+     border: 3px solid white;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+ }
+
+ .profile-preview img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+ }
+
+ .upload-btn {
+     font-size: 14px;
+     color: var(--yt-blue);
+     cursor: pointer;
+     font-weight: 600;
+     padding: 5px 12px;
+     border-radius: 20px;
+     background: rgba(6, 95, 212, 0.05);
+ }
+
+ /* --- Buttons --- */
+ .btn-container {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-top: 25px;
+ }
+
+ .primary-btn {
+     background-color: var(--yt-blue);
+     color: white;
+     border: none;
+     padding: 12px 28px;
+     border-radius: 24px;
+     font-weight: 600;
+     cursor: pointer;
+     box-shadow: 0 4px 12px rgba(6, 95, 212, 0.2);
+     transition: transform 0.2s, background 0.2s;
+ }
+
+ .primary-btn:hover {
+     background-color: #1a73e8;
+     transform: translateY(-1px);
+ }
+
+ .primary-btn:active {
+     transform: translateY(0);
+ }
+
+ .text-btn {
+     color: var(--yt-blue);
+     background: none;
+     border: none;
+     font-weight: 600;
+     cursor: pointer;
+     font-size: 14px;
+ }
+
+ /* --- Modal --- */
+ .modal-overlay {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: rgba(255, 255, 255, 0.98);
+     display: none;
+     justify-content: center;
+     align-items: center;
+     z-index: 1000;
+     backdrop-filter: blur(20px);
+ }
+
+ .modal {
+     text-align: center;
+     max-width: 400px;
+     padding: 30px;
+     animation: fadeIn 0.4s ease;
+ }
+
+ .modal i {
+     font-size: 60px;
+     color: var(--yt-blue);
+     margin-bottom: 24px;
+ }
+
+ /* --- Responsive --- */
+ @media (max-width: 480px) {
+     body {
+         background: white;
+         padding: 0;
+     }
+
+     .auth-card {
+         border-radius: 0;
+         box-shadow: none;
+         border: none;
+         padding: 30px 20px;
+         height: 100vh;
+         max-height: none;
+     }
+
+     .form-grid {
+         grid-template-columns: 1fr;
+     }
+
+     .full-width {
+         grid-column: span 1;
+     }
+ }
+
+ @media (max-width:364px) {
+     .btn-container button {
+         font-size: 13px;
+     }
+ }
+
+ @media (max-width:342px) {
+     .btn-container button {
+         font-size: 12px;
+     }
+ }
+
+ @media (max-width:324px) {
+     .btn-container button {
+         font-size: 11px;
+     }
+ }
+
+ /* simple spinner used when replacing button text */
+ .btn-spinner {
+     display: inline-block;
+     width: 18px;
+     height: 18px;
+     border: 2px solid rgba(255, 255, 255, 0.6);
+     border-top-color: #fff;
+     border-radius: 50%;
+     box-sizing: border-box;
+     animation: spin 0.8s linear infinite;
+     vertical-align: middle;
+ }
+
+ @keyframes spin {
+     to {
+         transform: rotate(360deg);
+     }
+ }

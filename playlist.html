@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This is playlist page</title>
+    <link rel="stylesheet" href="styles/YoutubeHomePage.css">
+    <link rel="stylesheet" href="styles/Resize.css">
+    <link rel="stylesheet" href="styles/Shorts.css">
+    <link rel="stylesheet" href="styles/playlist.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/notification.css">
+    <link rel="stylesheet" href="styles/account.css">
+</head>
+    <style id="auth-hide-style">html{visibility:hidden !important}</style>
+
+<body>
+    <div class="youtube-header">
+        <div class="left-section">
+            <div class="menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="menus">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="menues">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <a href="Velviora.html" style="text-decoration: none; color:black" class="youtube-logo-container">
+                <img src="images/1384060.png" class="youtube-logo">
+                <div class="youtube">YouTube</div>
+            </a>
+        </div>
+        <div class="middle-section">
+            <div class="search-container" style="position:relative">
+                <button class="search-buttons">
+                    <img src="images/149852.png" class="search-icon">
+                </button>
+                <input placeholder="Search" class="search-input js-search-input">
+                <button class="search-button" title="Search">
+                    <img src="images/149852.png" class="search-icon">
+                </button>
+            </div>
+            <div class="voice-search-container">
+                <button class="voice-search-button">
+                    <img src="images/709950.png" class="voice">
+                </button>
+                <div class="voice-search-text">Search with your voice</div>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="search-with-image good">
+                <div class="search-con">
+                    <img src="images/149852.png" class="search-icons">
+                </div>
+                <img src="images/709950.png" class="voices">
+            </div>
+            <button class="create-button">
+                <span class="plus">+</span>
+                <span class="create-text">Create</span>
+            </button>
+            <div class="notification-tooltip">
+                <div class="notification-container">
+                    <img class="notification-image" src="images/2529521.png">
+                    <div class="notification-number">9+</div>
+                </div>
+                <div class="notification-text">Notifications</div>
+            </div>
+            <button class="profile-button">
+                A
+            </button>
+        </div>
+    </div>
+    
+        <div class="search-containers" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(255,255,255,0.97); z-index:2000; align-items:center; justify-content:center;">
+            <div style="background:white; border-radius:18px; box-shadow:0 4px 32px rgba(0,0,0,0.13); padding:38px 28px 28px 28px; min-width:320px; max-width:92vw; display:flex; flex-direction:column; align-items:center; gap:0.5em;">
+                <input  class="search-inputs2 js-full-search" placeholder="Search History...">
+                <button class="search-full-button" style="padding:10px 0; width:100%; max-width:400px; font-size:1.08em; border-radius:8px; background:linear-gradient(90deg,#ff5252,#ff1744); color:white; border:none; font-weight:600; letter-spacing:0.03em; margin-bottom:10px; box-shadow:0 2px 8px rgba(255,23,68,0.08); transition:background 0.18s;">Search</button>
+                <button class="close-search-overlay" style="padding:8px 0; width:100%; max-width:400px; background:linear-gradient(90deg,#f5f5f5,#e0e0e0); border:none; color:#444; font-size:1.05em; border-radius:8px; font-weight:500; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,0.04);">Cancel</button>
+            </div>
+        </div>
+       
+    
+<div class="moving-sidebar" style="display:block">
+        <div class="upper-part">
+            <div class="moving-sidebar-container">
+                <img src="images/1946436.png" class="moving-sidebar-image">
+                <a href="Velviora.html" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Home</a>
+            </div>
+            <a class="moving-sidebar-container" href="Shorts.html" style="
+            margin-left:3.5px;
+            text-decoration: none;
+            ">
+                <img src="images/images.jpeg" class="moving-sidebar-image">
+                <div class="moving-sidebar-text">Shorts</div>
+        </a>
+            <div class="moving-sidebar-container">
+                <img src="images/2989849.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Subscriptions</a>
+            </div>
+        </div>
+        <div class="middle-part">
+            <div class="moving-sidebar-container">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text you">You</a>
+                <img src="images/130884.png" class="moving-sidebar-images">
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/3503786.png" class="moving-sidebar-image">
+                <a href="HistoryPage.html" style="text-decoration:none; color:inherit" class="moving-sidebar-text">History</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/4043797.png" class="moving-sidebar-image">
+                <a href="playlist.html" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Playlists</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/2991195.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Your videos</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/15469061.png" class="moving-sidebar-image">
+                <a href="watchLater.html" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Watch later</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/126473.png" class="moving-sidebar-image">
+                <a href="LikedPage.html" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Liked videos</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/541957.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Your clips</a>
+            </div>
+        </div>
+        <div class="Subscriptions">
+            <div class="moving-sidebar-container">
+                <div class="moving-sidebar-text-sub">Subscriptions</div>
+                <img src="images/130884.png" class="moving-sidebar-images">
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/images (1).jpeg" class="movin-sidebar-image">
+                <a href="channel.html" style="text-decoration:none; color:inherit" class="moving-sidebar-text">SuperSimpleDev</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/images (2).jpeg" class="movin-sidebar-image">
+                <a href="channel.html" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Fun always</a>
+            </div>
+            <div class="moving-sidebar-container show">
+                <img src="images/10927659.png" class="moving-sidebar-images yes">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Show More</a>
+            </div>
+        </div>
+        <div class="Explore">
+            <div class="moving-sidebar-container">
+                <img src="images/727218.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Music</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/2989838.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Live</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/7786362.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Gaming</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/81460.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">News</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/1152912.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Sports</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/4717385.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Learning</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/1254599.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Fashion</a>
+            </div>
+        </div>
+        <div class="More">
+            <div class="moving-sidebar-container">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text morey">More from YouTube</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/4138134.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">YouTube Studio</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/720320.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">YouTube Kids</a>
+            </div>
+        </div>
+        <div class="last">
+            <div class="moving-sidebar-container">
+                <img src="images/2040504.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Settings</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/2814368.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Report History</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/471664.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Help</a>
+            </div>
+            <div class="moving-sidebar-container">
+                <img src="images/11213138.png" class="moving-sidebar-image">
+                <a href="#" style="text-decoration:none; color:inherit" class="moving-sidebar-text">Send Feedback</a>
+            </div>
+        </div>
+        <div class="last" style="border:none">
+            <div class="moving-sidebar-container">
+                <div class="last-text">About Press Copyright Contact us CreatorsAdvertise Developers</div>
+            </div>
+            <div class="moving-sidebar-container">
+                <div class="last-text">Terms Privacy Policy & Safety How YouTube works Test
+                    <br> new features
+                </div>
+            </div>
+            <div class="moving-sidebar-container">
+                <div class="last-text">© 2025 Google LLC</div>
+            </div>
+        </div>
+</div>
+
+<!-- <div class="gfh7-download-bar" id="dlBar">
+        <div class="gfh7-bar-top">
+            <div>
+                <p style="font-size:14px;">Downloading...</p>
+                <p style="font-size:11px; opacity:0.7;">Keep this window open to continue</p>
+            </div>
+            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="document.getElementById('dlBar').style.display='none'"></i>
+        </div>
+        <div class="gfh7-progress-line"><div class="gfh7-progress-fill"></div></div>
+        <div class="gfh7-bar-actions"><span>View</span></div>
+    </div> -->
+
+    <main class="gfh7-content">
+            <h1 class="gfh7-page-title">Playlists</h1>
+            <div class="gfh7-filter-row">
+                <div class="gfh7-pill">Recently added <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="gfh7-pill active">Playlists</div>
+                <div class="gfh7-pill">Music</div>
+                <div class="gfh7-pill">Owned</div>
+            </div>
+
+            <div class="gfh7-playlist-container">
+                <div class="gfh7-playlist-card">
+                    <div class="gfh7-thumb-stack">
+                        <div class="gfh7-stack-bg-1"></div>
+                        <div class="gfh7-stack-bg-2"></div>
+                        <div class="gfh7-main-img-box">
+                            <img src="images/simon.png">
+                            <div class="gfh7-video-count"><i class="fa-solid fa-list-ul"></i> 3 videos</div>
+                        </div>
+                    </div>
+                    <div class="gfh7-card-details">
+                        <a href="watchLater.html" style="text-decoration:none; color:inherit"><h3>Watch later</h3></a>
+                        <p class="gfh7-meta">Private • Playlist<br>Updated 3 days ago</p>
+                        <a href="watchLater.html" class="gfh7-view-link" style="text-decoration:none;">View full playlist</a>
+                    </div>
+                </div>
+
+                <div class="gfh7-playlist-card">
+                    <div class="gfh7-thumb-stack">
+                        <div class="gfh7-stack-bg-1"></div>
+                        <div class="gfh7-stack-bg-2"></div>
+                        <div class="gfh7-main-img-box">
+                            <img src="images/photo_2026-01-30_16-15-27.jpg">
+                            <div class="gfh7-video-count"><i class="fa-solid fa-list-ul"></i> 35 videos</div>
+                        </div>
+                    </div>
+                    <div class="gfh7-card-details">
+                        <a href="LikedPage.html" style="text-decoration:none; color:inherit"><h3>Liked videos</h3></a>
+                        <p class="gfh7-meta">Private • Playlist<br>Updated 3 days ago</p>
+                        <a href="LikedPage.html" class="gfh7-view-link" style="text-decoration:none;">View full playlist</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+<div class="menues-main-container">
+
+</div>
+   
+
+     <div class="noti896g-wrapper">
+        <div class="noti896g-header">
+            <span class="noti896g-header-title">Notifications</span>
+            <div class="noti896g-settings-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+        </div>
+
+        <div class="noti896g-content-area" id="notificationList">
+            </div>
+    </div>
+    <script type="module" src="scripts/notification/notification.js"></script>
+
+<script
+ type="module"
+ src="scripts/playlist/playlist.js"
+></script>
+
+></script>
+    <!-- Account Wrapper (hidden by default, shown by profileDropdown.js) -->
+    <div class="accou786-wrapper" style="display:none; position:fixed; top:70px; right:30px; z-index:1000;">
+        <div class="accou786-header">
+            <div class="accou786-avatar-big">A</div>
+            <div class="accou786-meta-data">
+                <span class="accou786-user-name">Abenet Tilahun</span>
+                <span class="accou786-user-handle">@abenettilahun9658</span>
+                <a class="accou786-view-link">View your channel</a>
+            </div>
+        </div>
+        <hr class="accou786-divider">
+        <div id="accou786-menu-container"></div>
+    </div>
+    <script type="module" src="scripts/account/account.js"></script>
+    <script src="scripts/authGuard.js"></script>
+</body>
+
+</html>

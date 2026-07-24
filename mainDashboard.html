@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Creator Dashboard - Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --maindash9767-yt-red: #ff0000;
+            --maindash9767-bg-white: #ffffff;
+            --maindash9767-border: #e5e5e5;
+            --maindash9767-text-main: #0f0f0f;
+            --maindash9767-text-secondary: #606060;
+            --maindash9767-hover: #f2f2f2;
+            --maindash9767-sidebar-width: 240px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--maindash9767-bg-white);
+            color: var(--maindash9767-text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        .maindash9767-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 56px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--maindash9767-border);
+            z-index: 1000;
+        }
+
+        .maindash9767-logo-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .maindash9767-menu-icon {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .maindash9767-menu-icon:hover { background: var(--maindash9767-hover); }
+
+        .maindash9767-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+        .maindash9767-brand span { color: var(--maindash9767-yt-red); margin-right: 4px; }
+
+        .maindash9767-search-bar {
+            display: flex;
+            flex: 0 1 600px;
+            margin: 0 40px;
+        }
+
+        .maindash9767-search-bar input {
+            width: 100%;
+            padding: 8px 16px;
+            border: 1px solid var(--maindash9767-border);
+            border-radius: 40px 0 0 40px;
+            outline: none;
+        }
+
+        .maindash9767-search-btn {
+            padding: 0 20px;
+            border: 1px solid var(--maindash9767-border);
+            border-left: none;
+            background: #f8f8f8;
+            border-radius: 0 40px 40px 0;
+            cursor: pointer;
+        }
+
+        /* --- Sidebar --- */
+        .maindash9767-sidebar {
+            position: fixed;
+            top: 56px;
+            left: 0;
+            width: var(--maindash9767-sidebar-width);
+            height: calc(100vh - 56px);
+            background: white;
+            padding-top: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .maindash9767-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .maindash9767-nav-item:hover { background: var(--maindash9767-hover); }
+        .maindash9767-nav-item.active { background: #f2f2f2; font-weight: 500; }
+
+        /* --- Main Content --- */
+        .maindash9767-main-wrapper {
+            margin-top: 56px;
+            margin-left: var(--maindash9767-sidebar-width);
+            padding: 24px;
+        }
+
+        /* Stats Section */
+        .maindash9767-stats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .maindash9767-stat-card {
+            flex: 1 1 200px;
+            padding: 20px;
+            border: 1px solid var(--maindash9767-border);
+            border-radius: 12px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .maindash9767-stat-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08); 
+        }
+
+        .maindash9767-stat-title { font-size: 14px; color: var(--maindash9767-text-secondary); }
+        .maindash9767-stat-value { font-size: 28px; font-weight: 700; margin-top: 8px; }
+
+        /* Titles */
+        .maindash9767-section-title { 
+            margin-bottom: 24px; 
+            font-size: 20px; 
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .maindash9767-section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--maindash9767-border);
+        }
+
+        .maindash9767-list-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        /* User Item */
+        .maindash9767-user-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid var(--maindash9767-border);
+            border-radius: 8px;
+            gap: 16px;
+            background: white;
+            transition: background 0.2s;
+        }
+
+        .maindash9767-user-item:hover { background: #fafafa; }
+
+        .maindash9767-pfp {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .maindash9767-user-info {
+            display: flex;
+            flex: 1;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .maindash9767-info-group { display: flex; flex-direction: column; min-width: 120px; }
+        .maindash9767-info-label { font-size: 11px; text-transform: uppercase; color: var(--maindash9767-text-secondary); letter-spacing: 0.5px; margin-bottom: 4px; }
+        .maindash9767-info-data { font-size: 14px; font-weight: 500; word-break: break-all; }
+
+        /* Channel Card - Modern YouTube Studio Style */
+        .maindash9767-channel-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--maindash9767-border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            transition: box-shadow 0.2s;
+        }
+
+        .maindash9767-channel-card:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+
+        .maindash9767-channel-banner {
+            height: 120px;
+            width: 100%;
+            object-fit: cover;
+            background: #ddd;
+        }
+
+        .maindash9767-channel-body {
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .maindash9767-channel-meta { 
+            flex: 1; 
+            min-width: 200px;
+        }
+
+        .maindash9767-metric-row {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--maindash9767-hover);
+        }
+
+        .maindash9767-metric-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .maindash9767-metric-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--maindash9767-text-main);
+        }
+
+        .maindash9767-btn-manage {
+            padding: 10px 24px;
+            border-radius: 20px;
+            border: none;
+            background: #0f0f0f;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .maindash9767-btn-manage:hover { opacity: 0.8; }
+        .maindash9767-btn-manage:active { transform: scale(0.98); }
+
+        /* Responsiveness */
+        @media (max-width: 800px) {
+            .maindash9767-sidebar { width: 72px; }
+            .maindash9767-nav-text { display: none; }
+            .maindash9767-main-wrapper { margin-left: 72px; }
+            .maindash9767-search-bar { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .maindash9767-sidebar { display: none; }
+            .maindash9767-main-wrapper { margin-left: 0; padding: 16px; }
+            .maindash9767-user-info { flex-direction: column; gap: 12px; }
+        }
+
+        @media (max-width: 320px) {
+            .maindash9767-brand { font-size: 16px; }
+            .maindash9767-stat-value { font-size: 22px; }
+            .maindash9767-user-item { padding: 12px; }
+            .maindash9767-metric-row { flex-direction: column; gap: 8px; }
+            .maindash9767-btn-manage { width: 100%; margin-top: 10px; }
+        }
+    </style>
+</head>
+    <style id="auth-hide-style">html{visibility:hidden !important}</style>
+<body>
+
+    <header class="maindash9767-header">
+        <div class="maindash9767-logo-section">
+            <div class="maindash9767-menu-icon">☰</div>
+            <div class="maindash9767-brand"><span>▶</span>Studio</div>
+        </div>
+        <div class="maindash9767-search-bar">
+            <input type="text" placeholder="Search across dashboard...">
+            <button class="maindash9767-search-btn">🔍</button>
+        </div>
+        <div class="maindash9767-user-actions">
+            <img src="https://via.placeholder.com/32/000/fff?text=A" class="maindash9767-pfp" style="width:32px; height:32px" alt="Admin">
+        </div>
+    </header>
+
+    <aside class="maindash9767-sidebar">
+        <a href="#" class="maindash9767-nav-item active">
+            <span style="margin-right:20px">🏠</span> <span class="maindash9767-nav-text">Dashboard</span>
+        </a>
+        <a href="#" class="maindash9767-nav-item">
+            <span style="margin-right:20px">📂</span> <span class="maindash9767-nav-text">Content</span>
+        </a>
+        <a href="#" class="maindash9767-nav-item">
+            <span style="margin-right:20px">📈</span> <span class="maindash9767-nav-text">Analytics</span>
+        </a>
+        <a href="#" class="maindash9767-nav-item">
+            <span style="margin-right:20px">⚙️</span> <span class="maindash9767-nav-text">Settings</span>
+        </a>
+    </aside>
+
+    <main class="maindash9767-main-wrapper">
+        
+        <div class="maindash9767-stats-grid">
+            <div class="maindash9767-stat-card">
+                <div class="maindash9767-stat-title">Total Signups</div>
+                <div class="maindash9767-stat-value" id="count-signedup">0</div>
+            </div>
+            <div class="maindash9767-stat-card">
+                <div class="maindash9767-stat-title">Currently Active</div>
+                <div class="maindash9767-stat-value" id="count-loggedin" style="color:#2ba640">0</div>
+            </div>
+            <div class="maindash9767-stat-card">
+                <div class="maindash9767-stat-title">Verified Channels</div>
+                <div class="maindash9767-stat-value" id="count-channels">0</div>
+            </div>
+        </div>
+
+        <h2 class="maindash9767-section-title">Community Members</h2>
+        <div class="maindash9767-list-vertical" id="user-list">
+            </div>
+
+        <h2 class="maindash9767-section-title">Channel Leaderboard</h2>
+        <div class="maindash9767-list-vertical" id="channel-list">
+            </div>
+
+    </main>
+
+    <script>
+        // Mock User Data
+        const users = [
+            { pic: 'https://i.pravatar.cc/150?u=a1', fname: 'Abenet', lname: 'Tilahun', age: 21, country: 'Ethiopia', user: 'abenet_99', hash: '$2b$12$Kk...' },
+            { pic: 'https://i.pravatar.cc/150?u=b2', fname: 'Elias', lname: 'Zewdu', age: 24, country: 'Ethiopia', user: 'elias_dev', hash: '$2a$10$X9...' },
+            { pic: 'https://i.pravatar.cc/150?u=c3', fname: 'Marta', lname: 'Kebede', age: 22, country: 'Ethiopia', user: 'marta_k', hash: '$2y$12$Ab...' }
+        ];
+
+        // Mock Channel Data with Subscribers and Videos
+        const channels = [
+            { 
+                name: 'Nile Market Official', 
+                type: 'E-commerce', 
+                pic: 'https://via.placeholder.com/60/FF0000/FFFFFF?text=NM', 
+                banner: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800', 
+                email: 'support@nilemarket.com',
+                subscribers: 125400,
+                videos: 84
+            },
+            { 
+                name: 'Tech with Abenet', 
+                type: 'Education', 
+                pic: 'https://via.placeholder.com/60/2196F3/FFFFFF?text=TA', 
+                banner: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800', 
+                email: 'contact@abenet.tech',
+                subscribers: 2450000,
+                videos: 312
+            },
+            { 
+                name: 'Daily Vlogs', 
+                type: 'Entertainment', 
+                pic: 'https://via.placeholder.com/60/4CAF50/FFFFFF?text=DV', 
+                banner: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800', 
+                email: 'vlogs@daily.com',
+                subscribers: 8900,
+                videos: 450
+            }
+        ];
+
+        function formatCount(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num;
+        }
+
+        function renderDashboard() {
+            const userList = document.getElementById('user-list');
+            const channelList = document.getElementById('channel-list');
+
+            // Sort channels by subscribers (High to Low)
+            const sortedChannels = [...channels].sort((a, b) => b.subscribers - a.subscribers);
+
+            // Update Stats
+            document.getElementById('count-signedup').innerText = users.length;
+            document.getElementById('count-loggedin').innerText = Math.floor(users.length * 0.8);
+            document.getElementById('count-channels').innerText = channels.length;
+
+            // Render Users
+            userList.innerHTML = users.map(u => `
+                <div class="maindash9767-user-item">
+                    <img src="${u.pic}" class="maindash9767-pfp" alt="Profile">
+                    <div class="maindash9767-user-info">
+                        <div class="maindash9767-info-group">
+                            <span class="maindash9767-info-label">Identity</span>
+                            <span class="maindash9767-info-data">${u.fname} ${u.lname} (${u.age})</span>
+                        </div>
+                        <div class="maindash9767-info-group">
+                            <span class="maindash9767-info-label">Handle</span>
+                            <span class="maindash9767-info-data">@${u.user}</span>
+                        </div>
+                        <div class="maindash9767-info-group">
+                            <span class="maindash9767-info-label">Country</span>
+                            <span class="maindash9767-info-data">${u.country}</span>
+                        </div>
+                        <div class="maindash9767-info-group" style="flex: 2">
+                            <span class="maindash9767-info-label">Security Hash</span>
+                            <span class="maindash9767-info-data" style="font-family: monospace; color: #d32f2f;">${u.hash}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Channels
+            channelList.innerHTML = sortedChannels.map(c => `
+                <div class="maindash9767-channel-card">
+                    <img src="${c.banner}" class="maindash9767-channel-banner" alt="Banner">
+                    <div class="maindash9767-channel-body">
+                        <img src="${c.pic}" class="maindash9767-pfp" style="width:64px; height:64px" alt="Channel Logo">
+                        <div class="maindash9767-channel-meta">
+                            <h3 style="font-size:18px; margin-bottom: 2px;">${c.name}</h3>
+                            <p class="maindash9767-info-label">${c.type} • ${c.email}</p>
+                            
+                            <div class="maindash9767-metric-row">
+                                <div class="maindash9767-metric-box">
+                                    <span class="maindash9767-info-label">Subscribers</span>
+                                    <span class="maindash9767-metric-value">${formatCount(c.subscribers)}</span>
+                                </div>
+                                <div class="maindash9767-metric-box">
+                                    <span class="maindash9767-info-label">Videos</span>
+                                    <span class="maindash9767-metric-value">${c.videos}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="maindash9767-btn-manage">Analytics</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.onload = renderDashboard;
+    </script>
+    <script src="scripts/authGuard.js"></script>
+</body>
+</html>

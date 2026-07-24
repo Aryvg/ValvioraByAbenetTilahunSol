@@ -1,0 +1,528 @@
+@media (max-width: 445px) {
+    .shorts-progress {
+      position: fixed !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      height: 6px !important;
+      z-index: 40 !important;
+      opacity: 0 !important;
+      display: flex !important;
+      pointer-events: none !important;
+      transition: opacity .12s ease !important;
+    }
+    .shorts-video-wrapper:hover .shorts-progress {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+    .shorts-progress-track {
+      width: 100vw !important;
+      height: 4px !important;
+      background: rgba(255,255,255,0.12) !important;
+      border-radius: 4px !important;
+      overflow: hidden !important;
+    }
+    .shorts-progress-fill {
+      background: red !important;
+      height: 100% !important;
+      transition: width 0.08s linear !important;
+    }
+  .youtube-header {
+    display: none !important;
+  }
+  body {
+    padding-top: 0 !important;
+  }
+  .shorts-video-container {
+    width: 100vw !important;
+    margin: 0 !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .shorts-video {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+  .shorts-video-description-container {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 30px !important;
+    z-index: 20 !important;
+    color: white !important;
+    display: block !important;
+    pointer-events: auto !important;
+  }
+  .shorts-controls {
+    position: fixed !important;
+    top: 10px !important;
+    left: 10px !important;
+    z-index: 30 !important;
+    opacity: 0;
+    pointer-events: none;
+    display: flex !important;
+    transition: opacity .18s ease;
+  }
+  .shorts-video-wrapper:hover .shorts-controls,
+  .shorts-controls:active,
+  .shorts-controls:focus-within {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
+/* Search overlay input styles (synced with HistoryPage) */
+.search-inputs2 {
+  padding: 15px 18px;
+  border-radius: 10px;
+  border: 1.5px solid #e0e0e0;
+  font-size: 1.13em;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.search-inputs2:focus {
+  outline: none;
+  border-color: #ff1744;
+  box-shadow: 0 0 0 2px rgba(255,23,68,0.13), 0 2px 12px rgba(255,23,68,0.08);
+  background: #fff8fa;
+}
+.d img {
+    height: 30px;
+}
+.shorts-pro-image {
+    height: 50px;
+    width:50px;
+    border-radius: 30px;
+}
+.d{
+    background-color:rgb(223, 217, 217);
+    padding:10px;
+    border-radius:50px;
+}
+.d:hover{
+    background-color:rgb(201, 197, 197);
+    cursor:pointer;
+}
+.shortd .d {
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+.shortd .d:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.shortd .d.shorts-liked,
+.shortd .d.shorts-disliked {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+.shortd .d.shorts-liked img,
+.shortd .d.shorts-disliked img {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(190deg) brightness(118%) contrast(119%);
+}
+.shorts-video-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    width: 500px;
+    /* Give the div a width */
+    margin: 0 auto;
+}
+
+.shorts-video {
+    height: 580px;
+    max-height: calc(100vh - 60px);
+    aspect-ratio: 9 / 16;
+    /* Perfect shorts ratio */
+    border-radius: 12px;
+    object-fit: cover;
+    background-color: black;
+}
+.shortd{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top:1px;
+}
+
+.shorts-text {
+    margin-left: 6px;
+}
+
+.shorts-details-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+    margin-top:140px;
+    
+}
+
+.youtube-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    right: 0;
+    left: 0;
+    height: 60px;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+}
+
+body {
+    padding-top: 60px;
+}
+/* Wrap video to place controls on top */
+.shorts-video-wrapper {
+  position: relative;
+  width: fit-content;
+  border-radius: 12px;
+  overflow: hidden; /* clip progress to video rounded corners */
+}
+
+/* Hide default video controls completely */
+.shorts-video::-webkit-media-controls {
+  display: none !important;
+}
+.shorts-video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+/* Custom controls container */
+.shorts-controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+
+.shorts-video-wrapper:hover .shorts-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Control button style */
+.control-btn {
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45); /* YouTube-like dark circular background */
+  transition: background .12s ease, transform .08s ease, box-shadow .12s ease;
+  filter: invert(1) saturate(0) brightness(1.2); /* make icon appear white */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.control-btn:hover {
+  background: rgba(0,0,0,0.65);
+  transform: translateY(-1px) scale(1.03);
+}
+.control-btn:active {
+  transform: scale(0.98);
+}
+.vi-pro{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    column-gap:10px;
+    margin-bottom:10px;
+}
+.subscribe-btn{
+    background-color: black;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 20px;
+    transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
+    border: none;
+}
+
+/* Hover effect for the subscribe button */
+.subscribe-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+}
+
+/* Make wrapper reference for absolute children */
+.shorts-video-wrapper {
+  position: relative;
+  width: fit-content;
+}
+
+/* Description positioned inside bottom of video */
+.shorts-video-description-container {
+  position: absolute;
+  bottom: 30px;
+  left: 12px;
+  right: 12px;
+  color: white;
+  z-index: 9;
+}
+
+/* Optional: improve text readability */
+.shorts-vi-des {
+  font-size: 14px;
+  color: white;
+  width: 100%;
+  max-width: calc(100% - 24px);
+  margin-left: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+}
+
+/* Make subscribe button visible on video */
+.subscribe-btn {
+  background-color: white;
+  color: black;
+}
+
+
+
+/* ===== Shorts vertical snap system ===== */
+
+/* Prevent page scrolling */
+body {
+  overflow: hidden;
+}
+
+/* Make main shorts area full screen */
+/* Shorts container: fixed, clips overflow */
+.short-video {
+  position: fixed;
+  top: 60px; /* below header */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.35s ease;
+}
+
+/* Each short takes full viewport height */
+/* Each short is absolutely positioned, only .active is visible */
+.shorts-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 60px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.shorts-video-container.active {
+  display: flex;
+  z-index: 2;
+}
+.short-video{
+  display:flex;
+  flex-direction:column;
+  row-gap:10px;
+}
+
+/* Progress bar positioned flush at the bottom; hidden until hover */
+.shorts-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px; /* slightly above the video's bottom */
+  height: 6px;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* allow clicks only on the track */
+  opacity: 0;
+  transition: opacity .12s ease;
+}
+.shorts-video-wrapper:hover .shorts-progress {
+  opacity: 1;
+  pointer-events: auto;
+}
+.shorts-progress-track {
+  width: 100%;
+  height: 4px; /* thinner track inside the 6px container */
+  background: rgba(255,255,255,0.12); /* subtle track */
+  border-radius: 4px;
+  overflow: hidden;
+}
+.shorts-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: red; /* required red color */
+  transition: width 0.08s linear;
+}
+@media (max-width:1080px){
+  .menu{
+    display: none;
+  }
+  .menus{
+    display: block;
+  }
+}
+@media (max-width:478px){
+  .shorts-details-container {
+    position:fixed;
+    right:50px;
+    margin-top:115px;
+    /* margin-bottom:140px; */
+}
+
+.shorts-vi-des{
+  width:310px;
+}
+.shorts-text{
+  color:white;
+}
+}
+@media (max-width:442px){
+  .shorts-details-container {
+    position:fixed;
+    right:20px;
+    margin-top:115px;
+}
+.shorts-vi-des{
+  width:230px;
+}
+}
+@media (max-width:418px){
+  .shorts-details-container {
+    position:fixed;
+    /* right:50px; */
+    right:20px;
+    margin-top:115px;
+}
+.shorts-video{
+  width:350px;
+}
+}
+@media (max-width:406px){
+  .shorts-details-container {
+    position:fixed;
+    /* right:33px; */
+    right:10px;
+    margin-top:115px;
+}
+.shorts-video{
+  width:350px;
+}
+}
+@media (max-width:374px){
+  .shorts-details-container {
+    position:fixed;
+    /* right:46px; */
+    right:10px;
+
+    margin-top:115px;
+}
+.shorts-video{
+  width:310px;
+}
+}
+@media (max-width:372px){
+  .shorts-details-container {
+    position:fixed;
+    /* right:38px; */
+    right:10px;
+    margin-top:115px;
+}
+.shorts-video{
+  width:310px;
+}
+}
+@media (max-width:478px){
+  .shorts-pro-title{
+    font-size:15px;
+  }
+  /* .subscribe-btn{
+    height:20px;
+    font-size:13px;
+    padding-bottom:25px;
+  } */
+  .d{
+    height:20px;
+    width:20px;
+  }
+  .d img {
+    height: 20px;
+}
+.shorts-pro-image {
+    height: 40px;
+    margin-left:6px;
+}
+.shorts-details-container{
+   margin-bottom:60px;
+}
+  
+}
+@media (max-width:346px){
+  .shorts-details-container {
+    position:fixed;
+    /* right:25px; */
+    right:10px;
+
+    margin-top:115px;
+}
+.shorts-video{
+  width:310px;
+}
+}
+@media (max-width:330px){
+  .shorts-details-container {
+    position:fixed;
+    /* right:25px; */
+    right:10px;
+    margin-top:115px;
+}
+.shorts-vi-des{
+  width:200px;
+}
+.shorts-video{
+  width:290px;
+}
+}
+@media (max-width:326px){
+  .notification-image{
+    margin-right:30px;
+  }
+  .notification-number{
+    right:30px;
+  }
+}
+
+ .menues-main-container{
+  display:none;
+ }
+ /* .search-containers{
+  display:block;
+ } */
+.menus{
+   margin-bottom:8px;
+}
