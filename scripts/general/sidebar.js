@@ -8,7 +8,7 @@ export const sidebarComponent=`
                 </div>
                 <div class="sidebar-text">Home</div>
             </a>
-            <a href="shorts.html" class="sidebarLink">
+            <a href="Shorts.html" class="sidebarLink">
                 <div>
                     <img src="images/images.jpeg" class="sidebar-image">
                 </div>
