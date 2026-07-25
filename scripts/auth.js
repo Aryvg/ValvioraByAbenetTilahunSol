@@ -51,8 +51,10 @@ export async function isCurrentUserAdmin() {
 }
 
 export async function applyAdminNavVisibility() {
-    const link = document.getElementById('adminSidebarLink');
-    if (!link) return;
     const admin = await isCurrentUserAdmin();
-    link.classList.toggle('is-visible', admin === true);
+    document.querySelectorAll('#adminSidebarLink, .js-admin-sidebar-link').forEach((link) => {
+        const visible = admin === true;
+        link.classList.toggle('is-visible', visible);
+        link.style.display = visible ? 'flex' : 'none';
+    });
 }
