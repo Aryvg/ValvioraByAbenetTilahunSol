@@ -1501,20 +1501,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    pointer-events: none;
+    opacity: 1;
+    pointer-events: auto;
     transition: opacity 0.2s ease, background 0.15s ease, transform 0.15s ease;
 }
 
-.gsho-arrow-left  { left:  -22px; }
-.gsho-arrow-right { right: -22px; }
+.gsho-arrow-left  { left: -18px; }
+.gsho-arrow-right { right: -18px; }
 
 .gsho-arrow-hidden {
     display: none !important;
 }
 
-/* Show arrows only when hovering the wrapper */
-.gsho-layout-wrapper:hover .gsho-arrow:not(.gsho-arrow-hidden) {
+/* Keep arrows visible and clickable on touch devices */
+.gsho-layout-wrapper:hover .gsho-arrow:not(.gsho-arrow-hidden),
+.gsho-layout-wrapper:focus-within .gsho-arrow:not(.gsho-arrow-hidden) {
     opacity: 1;
     pointer-events: auto;
 }
