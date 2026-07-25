@@ -336,6 +336,10 @@ function initShortsInteractions() {
     }
 
     video.addEventListener('click', () => {
+      if (suppressNextShortTap) {
+        suppressNextShortTap = false;
+        return;
+      }
       if (playBtn) playBtn.click();
     });
 
@@ -407,6 +411,7 @@ async function loadCommentCounts(shorts) {
 
 let currentIndex = 0;
 let shortsFeed = [];
+let suppressNextShortTap = false;
 const SHORTS_VIEW_SECONDS = 3;
 
 function formatShortViews(value) {
@@ -466,6 +471,61 @@ function initArrowNavigation() {
   window.addEventListener('resize', updateShortPosition);
 }
 
+function initTouchNavigation() {
+  const feed = document.querySelector('.short-video');
+  if (!feed || !('ontouchstart' in window || navigator.maxTouchPoints > 0)) return;
+
+  let startX = 0;
+  let startY = 0;
+  let hasMoved = false;
+
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    startX = touch.clientX;
+    startY = touch.clientY;
+    hasMoved = false;
+  };
+
+  const handleTouchMove = (event) => {
+    if (event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+
+    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 8) {
+      hasMoved = true;
+      event.preventDefault();
+    }
+  };
+
+  const handleTouchEnd = (event) => {
+    if (!event.changedTouches.length) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    if (hasMoved && absY > absX && absY > 50) {
+      suppressNextShortTap = true;
+      if (deltaY < 0 && currentIndex < shortsFeed.length - 1) {
+        currentIndex++;
+        updateShortPosition();
+      } else if (deltaY > 0 && currentIndex > 0) {
+        currentIndex--;
+        updateShortPosition();
+      }
+    }
+
+    hasMoved = false;
+  };
+
+  feed.addEventListener('touchstart', handleTouchStart, { passive: true });
+  feed.addEventListener('touchmove', handleTouchMove, { passive: false });
+  feed.addEventListener('touchend', handleTouchEnd, { passive: true });
+}
+
 function initSharePopup() {
   const shareOverlay = document.querySelector('.shorts-share-overlay');
   const shareUrlInput = document.querySelector('.shorts-share-url-input');
@@ -514,6 +574,7 @@ async function init() {
     initShortsComments();
     initSharePopup();
     initArrowNavigation();
+    initTouchNavigation();
 
     let startIndex = 0;
 
