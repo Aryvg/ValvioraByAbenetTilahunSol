@@ -650,11 +650,21 @@ body {
     top: 69px;
     left: 70px;
     z-index: 99999;
+    margin: 0;
+    padding: 0;
 }
 
-
 .left-contained {
-    display: none;
+    display: block;
+    position: fixed;
+    top: 69px;
+    left: 3px;
+    height: 34px;
+    width: 80px;
+    background-color: white;
+    z-index: 99998;
+    pointer-events: none;
+    margin: 0;
 }
 
 .next-image-right {
