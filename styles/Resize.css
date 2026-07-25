@@ -84,16 +84,13 @@
 
     .left-contained {
         background-color: white;
-        width: 90px;
+        width: 82px;
         position: fixed;
         top: 68px;
-        left: -50px;
+        left: -58px;
         height: 36px;
-        z-index: 1000;
-    }
-
-    .left-contained {
-        width: 73px;
+        z-index: 99998;
+        pointer-events: none;
     }
 
     .next-image-left {
