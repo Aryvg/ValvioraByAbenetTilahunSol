@@ -4,7 +4,7 @@ import { sharedSidebarSections } from '../general/sidebarSharedContent.js';
 import { setupShortsMenus } from './shortsMenus.js';
 import { setupNotificationDropdown } from '../notification/notificationDropdown.js';
 import { setupProfileDropdown } from '../account/profileDropdown.js';
-import { getAccessToken } from '../auth.js';
+import { getAccessToken, applyAdminNavVisibility } from '../auth.js';
 import { initShortsComments } from './shortsComment.js';
 import { initPresence } from '../presence.js';
 import { populateNotificationBadge, populateProfileButton } from '../general/Header.js';
@@ -22,6 +22,7 @@ document.querySelector('.menues-main-container').innerHTML = menuesContainerComp
 const movingSidebar = document.querySelector('.moving-sidebar');
 if (movingSidebar) {
   movingSidebar.innerHTML = sharedSidebarSections;
+  applyAdminNavVisibility();
 }
 
 populateNotificationBadge();
