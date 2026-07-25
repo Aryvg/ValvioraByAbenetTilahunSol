@@ -256,21 +256,24 @@
     .gsho-video-card:nth-child(2) {
         display: none;
     }
+
     .shortsgh {
-    margin-left: 0px;
+        margin-left: 0;
     }
 
-    /* .gsho-thumbnail-box { max-height: 500px; } */
     .gsho-layout-wrapper {
-        /* width:84%; */
-        /* width: 100%; */
-        margin-left: -18px;
-        /* border-radius:0; */
+        margin-left: 0;
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        gap: 10px;
     }
 
-    /* .gsho-thumbnail-box {
-                border-radius:0;
-             } */
+    .gsho-video-card {
+        width: calc(50% - 5px);
+        max-width: 100%;
+        min-width: 0;
+    }
 }
 
 @media (max-width: 320px) {
