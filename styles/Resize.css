@@ -42,14 +42,13 @@
         width: 280px;
         margin-right: 70px;
     }
-
-    body {
-        margin-left: 25px;
-        margin-right: 10px;
-    }
 }
 
 @media (max-width:540px) {
+    body {
+        padding-bottom: 150px;
+    }
+
     .profile-button {
         display: none;
     }
