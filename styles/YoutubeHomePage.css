@@ -109,6 +109,8 @@
 
 html {
     overflow-x: hidden;
+    height: auto;
+    min-height: 100%;
 }
 
 body {
@@ -116,14 +118,15 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #111;
-    margin-left: 25px;
-    margin-right: 10px;
-    padding-bottom: 100px;
-    padding-top: 80px;
-    min-height: 60dvh;
+    margin: 0;
+    padding: 88px 0 140px;
+    min-height: 100%;
     overflow-x: hidden;
-    overscroll-behavior-y: none;
+    overflow-y: auto;
+    overflow-y: auto !important;
+    overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
+    position: relative;
 }
 
 /* Hide the horizontal scrollbar */
@@ -727,10 +730,12 @@ body {
     display: grid;
     align-items: center;
     grid-template-columns: 1fr 1fr 1fr;
-    margin-right: 0px;
-    margin-left: 80px;
+    margin: 0;
+    padding: 0 12px 140px;
     column-gap: 20px;
     row-gap: 5px;
+    width: auto;
+    box-sizing: border-box;
 }
 
 /* Make gsho-layout-wrapper always span the full row and not be affected by grid */
@@ -1379,19 +1384,13 @@ body {
 }
 
 @media (max-width:529px) {
-    body {
-        margin-left: 0;
-        margin-right: 0;
-    }
-
     .sidebar-container {
         display: none !important;
     }
 
     .thumbnail-main-container,
     .gsho-layout-wrapper {
-        margin-left: 0;
-        margin-right: 0;
+        margin: 0;
         padding-left: 0;
         padding-right: 0;
         grid-template-columns: 1fr;
@@ -1401,7 +1400,7 @@ body {
     }
 
     .thumbnail-container {
-        margin-left: 0px;
+        margin-left: 0;
         margin-right: 0;
     }
 }
