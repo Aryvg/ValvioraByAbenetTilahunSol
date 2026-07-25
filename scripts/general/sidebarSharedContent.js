@@ -11,6 +11,23 @@ export const sharedSidebarSections = `
         <img src="images/images.jpeg" class="moving-sidebar-image">
         <div class="moving-sidebar-text">Shorts</div>
     </a>
+    <a class="moving-sidebar-container js-admin-sidebar-link is-admin-only" href="adminDashboard.html" style="
+        margin-left:3.5px;
+        text-decoration:none;
+        color:inherit;
+        padding:8px 10px;
+        border-radius:12px;
+        background:linear-gradient(135deg, rgba(255,0,0,0.08), rgba(255,0,0,0.02));
+        box-shadow:0 2px 8px rgba(0,0,0,0.04);
+        border:1px solid rgba(255,0,0,0.12);
+        display:none;
+    ">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="moving-sidebar-image" style="color:#ff0000;">
+            <path d="M12 2l7 3v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="moving-sidebar-text">Admin</div>
+    </a>
     
 </div>
 <div class="middle-part">
