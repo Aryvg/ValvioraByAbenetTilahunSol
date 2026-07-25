@@ -2059,6 +2059,11 @@ body {
         width: calc(100% - 20px);
     }
 }
+@media (max-width: 707px) {
+    .main-video {
+       margin-left:10px;
+    }
+}
 
 /* Small screens: make item a row and keep three-dots in the normal flow beside the texts */
 @media (max-width:699px) {
