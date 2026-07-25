@@ -245,7 +245,7 @@ import { getNotInterestedIds, postNotInterested } from '../general/notInterested
                 }));
 
                 const notInterestedIds = await getNotInterestedIds();
-                const filteredMapped = mapped.filter(item => !notInterestedIds.has(item.shortId));
+                const filteredMapped = mapped.filter(item => !notInterestedIds.has(item.shortId)).reverse();
                 renderShorts(filteredMapped);
 
             } catch (err) {
