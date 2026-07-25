@@ -34,7 +34,7 @@ import './handlebackforward.js';
 
 import { headerComponent, populateVideoSummarySuggestions, populateNotificationBadge, populateProfileButton } from '../general/Header.js';
 import { getChannelIdForVideo, markNotificationRead } from '../notification/notificationStore.js';
-import { sidebarComponent } from '../general/sidebar.js';
+import { sidebarComponent, setupSidebarChannelLink } from '../general/sidebar.js';
 import { movingSidebarComponent} from '../general/moving-sidebar.js';
 import { menuesContainerComponent } from '../general/menues-container.js';
 import { renderThumbnails, fetchAndRenderHomepage } from './renderThumbnails.js';
@@ -73,6 +73,7 @@ window.addEventListener('pageshow', (event) => {
 });
 
 document.querySelector('.down-bar-container').innerHTML=sidebarComponent;
+setupSidebarChannelLink();
 initPresence();
 document.querySelector('.moving-sidebar').innerHTML=movingSidebarComponent;
 applyAdminNavVisibility();
