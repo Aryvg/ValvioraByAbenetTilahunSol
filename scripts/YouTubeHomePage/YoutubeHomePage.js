@@ -72,10 +72,10 @@ window.addEventListener('pageshow', (event) => {
     }
 });
 
-applyAdminNavVisibility();
 document.querySelector('.down-bar-container').innerHTML=sidebarComponent;
 initPresence();
 document.querySelector('.moving-sidebar').innerHTML=movingSidebarComponent;
+applyAdminNavVisibility();
 document.querySelector('.menues-main-container').innerHTML=menuesContainerComponent;
 
 // Attach a safe handler to the header Sign-in button (if present).
