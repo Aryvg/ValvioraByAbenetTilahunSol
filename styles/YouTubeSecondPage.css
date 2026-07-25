@@ -2061,7 +2061,7 @@ body {
 }
 @media (max-width: 707px) {
     .main-video {
-       margin-left:10px;
+       margin-left:7px;
     }
 }
 
@@ -3239,9 +3239,13 @@ body {
 
 @media (max-width:440px) {
     .main-video {
-        margin-top:15px;
-        border-radius: 10px;
-        width: 100%;
+        margin-top: 0;
+        border-radius: 0px;
+        /* expand to viewport edges while keeping box-model stable */
+        width: calc(100% + 20px);
+        margin-left: 0px;
+        max-width: none;
+        box-sizing: border-box;
     }
     .youtube-header{
         display:none;
