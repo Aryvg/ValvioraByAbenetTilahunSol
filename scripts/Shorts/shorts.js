@@ -47,7 +47,7 @@ async function fetchShorts(requestedShortId = null) {
 
   const shorts = await response.json();
   const visibleShorts = Array.isArray(shorts)
-    ? shorts.filter(item => !Boolean(item.isBanned))
+    ? shorts.filter(item => !Boolean(item.isBanned)).reverse()
     : [];
 
   if (!requestedShortId || visibleShorts.some(s => s.shortId === requestedShortId)) {
@@ -84,7 +84,7 @@ async function fetchShorts(requestedShortId = null) {
       };
     });
 
-    return merged.filter(item => !Boolean(item.isBanned));
+    return merged.filter(item => !Boolean(item.isBanned)).reverse();
   } catch (err) {
     console.warn('Fallback Shorts merge failed:', err);
     return visibleShorts;
