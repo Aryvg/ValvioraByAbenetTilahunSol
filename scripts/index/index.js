@@ -91,7 +91,7 @@ function toggleView(view) {
         loginForm.style.display = 'none';
         signupForm.style.display = 'block';
         authCard.classList.add('signup-mode');
-        document.getElementById('formTitle').innerText = 'Join Youtube';
+        document.getElementById('formTitle').innerText = 'Join Velviora';
     } else {
         signupForm.style.display = 'none';
         loginForm.style.display = 'block';
@@ -484,7 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const msg = json.message || 'You have successfully reset your password.';
                     showSuccessModal(msg, () => {
                         try { document.getElementById('formTitle').innerText = 'Sign in'; } catch(e){}
-                        try { document.getElementById('formSubTitle').innerText = 'to continue to Youtube'; } catch(e){}
+                        try { document.getElementById('formSubTitle').innerText = 'to continue to Velviora'; } catch(e){}
                         try { resetFormEl.style.display = 'none'; loginForm.style.display = 'block'; } catch(e){}
                         try { sessionStorage.removeItem('passwordResetEmail'); } catch(e){}
                     });
