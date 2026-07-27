@@ -140,7 +140,16 @@ export async function renderVideoById(explicitVideoId) {
     const likes            = data.Likes != null ? String(data.Likes)    : '0';
     const dislikes         = data.Dislikes != null ? String(data.Dislikes) : '0';
     const time             = data.time != null ? String(data.time)      : '0:00';
-    const shareUrl         = `${window.location.origin}/VelvioraWatch?videoId=${encodeURIComponent(videoId)}`;
+    const shareUrl = (() => {
+      try {
+        const url = new URL('VelvioraWatch', window.location.href);
+        url.searchParams.set('videoId', videoId || '');
+        return url.toString();
+      } catch (error) {
+        console.warn('Failed to build share URL', error);
+        return `${window.location.origin}/VelvioraWatch?videoId=${encodeURIComponent(videoId || '')}`;
+      }
+    })();
     const subscribeCount      = data.subscribe != null ? String(data.subscribe) : 'unsubscribed yet';
 
     const labelViews = (value) => {
