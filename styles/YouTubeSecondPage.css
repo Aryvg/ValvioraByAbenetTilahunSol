@@ -2581,8 +2581,42 @@ body {
 
 .comment-text {
     margin-top: 5px;
+}
+
+.comment-text-expandable {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.comment-text-preview,
+.comment-text-full {
     font-size: 16px;
     color: rgb(33, 33, 33);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.comment-text-toggle {
+    align-self: flex-start;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #065fd4;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.comment-text-toggle:hover {
+    text-decoration: underline;
+}
+
+.comment-text-toggle:focus {
+    outline: none;
+    color: #0b4a9b;
 }
 
 .commenter-email {
