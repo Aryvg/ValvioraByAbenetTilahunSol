@@ -429,6 +429,7 @@ function setupVideoPageInteractivity() {
         if (!commentInputRow || !commentBox) return;
 
         let totalTopLevelComments = 0;
+        const MAX_COMMENT_LENGTH = 10000;
 
         // Create emoji button (left side)
         const emojiBtn = document.createElement('button');
@@ -649,7 +650,7 @@ function setupVideoPageInteractivity() {
         // Submit (comment) - send to backend, render the created comment, and update count
         submitBtn.addEventListener('click', async () => {
             const text = commentBox.value.trim();
-            if (!text) return;
+            if (!text || text.length > MAX_COMMENT_LENGTH) return;
 
             const contentId = new URLSearchParams(window.location.search).get('videoId');
             if (!contentId) {
@@ -951,7 +952,7 @@ function setupVideoPageInteractivity() {
                             <div class="commenter-email">${escapeHtml(displayName)}</div>
                             <div class="comment-time"${timeDataAttr ? ` data-ts="${escapeHtml(timeDataAttr)}"` : ''}>${timeText}</div>
                         </div>
-                        <div class="comment-text">${escapeHtml(obj.text)}</div>
+                        <div class="comment-text"></div>
                     </div>
                     <div class="like-dislike">
                         <div class="like" data-count="${obj.likes}">
@@ -992,6 +993,11 @@ function setupVideoPageInteractivity() {
                   <div></div>
                 </div>
             `;
+
+            const commentTextContainer = wrapper.querySelector('.comment-text');
+            if (commentTextContainer) {
+                commentTextContainer.appendChild(createExpandableCommentText(obj.text));
+            }
 
             const avatarImg = wrapper.querySelector('.commenter-profile-picture img');
             if (avatarImg) {
@@ -1204,7 +1210,7 @@ function setupVideoPageInteractivity() {
                                 <div class="commenter-email">${escapeHtml(subDisplayName)}</div>
                                 <div class="comment-time"${subTimeDataAttr ? ` data-ts="${escapeHtml(subTimeDataAttr)}"` : ''}>${subTimeText}</div>
                             </div>
-                            <div class="comment-text">${escapeHtml(subObj.text)}</div>
+                            <div class="comment-text"></div>
                         </div>
                         <div class="like-dislike">
                             <div class="like" data-count="${subObj.likes || 0}">
@@ -1224,6 +1230,11 @@ function setupVideoPageInteractivity() {
                       <div></div>
                     </div>
                 `;
+
+                const subCommentTextContainer = c.querySelector('.comment-text');
+                if (subCommentTextContainer) {
+                    subCommentTextContainer.appendChild(createExpandableCommentText(subObj.text));
+                }
 
                 const subAvatarImg = c.querySelector('.commenter-profile-picture img');
                 if (subAvatarImg) {
@@ -1781,10 +1792,14 @@ function setupVideoPageInteractivity() {
             }
         });
 
-        // enable/disable submit based on content
+        // enable/disable submit based on content and length
         function updateSubmitState() {
-            const hasText = commentBox.value.trim().length > 0;
-            submitBtn.disabled = !hasText;
+            const text = commentBox.value;
+            const hasText = text.trim().length > 0;
+            const tooLong = text.length > MAX_COMMENT_LENGTH;
+            submitBtn.disabled = !hasText || tooLong;
+            submitBtn.setAttribute('aria-disabled', (!hasText || tooLong).toString());
+            submitBtn.title = tooLong ? `Comments cannot be longer than ${MAX_COMMENT_LENGTH} characters.` : '';
         }
 
         // enable submit when typing (previously missing)
@@ -1823,9 +1838,56 @@ function setupVideoPageInteractivity() {
 
         // simple HTML escape to avoid injection in this demo
         function escapeHtml(str) {
-            return str.replace(/[&<>"']/g, function (m) {
+            return String(str).replace(/[&<>"']/g, function (m) {
                 return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
             });
+        }
+
+        function createExpandableCommentText(text) {
+            const container = document.createElement('div');
+            container.className = 'comment-text-expandable';
+
+            const rawText = text == null ? '' : String(text);
+            const safeText = rawText.trim();
+
+            if (!safeText) {
+                return container;
+            }
+
+            const previewText = safeText.length > 220
+                ? `${safeText.slice(0, 220).trimEnd()}...`
+                : safeText;
+
+            const preview = document.createElement('span');
+            preview.className = 'comment-text-preview';
+            preview.textContent = previewText;
+
+            const fullText = document.createElement('span');
+            fullText.className = 'comment-text-full';
+            fullText.textContent = safeText;
+            fullText.hidden = true;
+
+            container.appendChild(preview);
+            container.appendChild(fullText);
+
+            if (safeText.length > 220) {
+                const toggleBtn = document.createElement('button');
+                toggleBtn.type = 'button';
+                toggleBtn.className = 'comment-text-toggle';
+                toggleBtn.textContent = 'Read more';
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                toggleBtn.addEventListener('click', () => {
+                    const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+                    const nextExpanded = !isExpanded;
+                    preview.hidden = nextExpanded;
+                    fullText.hidden = !nextExpanded;
+                    toggleBtn.textContent = nextExpanded ? 'Read less' : 'Read more';
+                    toggleBtn.setAttribute('aria-expanded', nextExpanded ? 'true' : 'false');
+                });
+                container.appendChild(toggleBtn);
+            }
+
+            return container;
         }
 
     }
