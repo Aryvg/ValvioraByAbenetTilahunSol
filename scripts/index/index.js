@@ -176,6 +176,7 @@ signupForm.addEventListener('submit', async function (e) {
 
 // Password recovery flow (send reset code and verify) handled here
 let _recoveryEmailCached = null;
+let _recoveryCodeCached = null;
 document.addEventListener('DOMContentLoaded', () => {
     const forgotForm = document.getElementById('forgotPasswordForm');
     if (forgotForm) {
@@ -294,6 +295,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
+            // Only checking the code here (no newPassword) - the backend does
+            // NOT consume the code on this call, so it's still valid for the
+            // final "set new password" step below.
             const res = await fetch('https://valviorabackend2.onrender.com/registered/reset-verify', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -301,6 +305,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const json = await res.json().catch(() => ({}));
             if (res.ok) {
+                // Remember the verified code - the actual password change is
+                // a separate call that re-checks this same code server-side.
+                _recoveryCodeCached = code;
+                try { sessionStorage.setItem('passwordResetCode', code); } catch (e) {}
+
                 // hide modal and show reset form (ensure forgot form is hidden so it doesn't overlap)
                 const resetVerifyModal = document.getElementById('resetVerifyModal');
                 const resetPasswordFormEl = document.getElementById('resetPasswordForm');
@@ -460,10 +469,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // identify account email from reset flow (sessionStorage set earlier)
+            // identify account email + verified code from the reset flow
             const email = (function(){ try { return sessionStorage.getItem('passwordResetEmail') || _recoveryEmailCached || null } catch(e){ return _recoveryEmailCached || null }})();
-            if (!email) {
-                alert('No account email found for password reset. Please re-request a reset.');
+            const code = (function(){ try { return sessionStorage.getItem('passwordResetCode') || _recoveryCodeCached || null } catch(e){ return _recoveryCodeCached || null }})();
+            if (!email || !code) {
+                alert('No verified reset request found. Please re-request a reset.');
                 return;
             }
 
@@ -474,10 +484,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const res = await fetch('https://valviorabackend2.onrender.com/registered', {
-                    method: 'PUT',
+                // Setting the password here re-checks the reset code
+                // server-side, so this can't be used to change a password
+                // without proving ownership of the account's email.
+                const res = await fetch('https://valviorabackend2.onrender.com/registered/reset-verify', {
+                    method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: String(email), password: String(a) })
+                    body: JSON.stringify({ user: String(email), code: String(code), newPassword: String(a) })
                 });
                 const json = await res.json().catch(() => ({}));
                 if (res.ok) {
@@ -486,7 +499,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         try { document.getElementById('formTitle').innerText = 'Sign in'; } catch(e){}
                         try { document.getElementById('formSubTitle').innerText = 'to continue to Velviora'; } catch(e){}
                         try { resetFormEl.style.display = 'none'; loginForm.style.display = 'block'; } catch(e){}
-                        try { sessionStorage.removeItem('passwordResetEmail'); } catch(e){}
+                        try { sessionStorage.removeItem('passwordResetEmail'); sessionStorage.removeItem('passwordResetCode'); } catch(e){}
+                        _recoveryCodeCached = null;
+                        _recoveryEmailCached = null;
                     });
                     return;
                 } else {
@@ -521,6 +536,7 @@ async function finishSignup() {
     const emailInput = document.getElementById('email');
     const email = emailInput ? emailInput.value.trim() : null;
     if (!code || code.length < 4) {
+        document.getElementById('modalError').textContent = 'Enter the code from your email.';
         document.getElementById('modalError').style.display = 'flex';
         return;
     }
@@ -530,18 +546,31 @@ async function finishSignup() {
         return;
     }
 
+    const attemptVerify = () => fetch('https://valviorabackend2.onrender.com/register/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ user: email, code })
+    });
+
     try {
-        const res = await fetch('https://valviorabackend2.onrender.com/register/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({ user: email, code })
-        });
+        let res;
+        try {
+            res = await attemptVerify();
+        } catch (firstErr) {
+            // A sleeping/cold backend (e.g. Render's free tier waking up) can
+            // drop the very first request even though it's still processed
+            // server-side. One quiet retry clears this up without bothering
+            // the user with an error they'd just have to retry themselves.
+            console.warn('Verify request failed, retrying once...', firstErr);
+            res = await attemptVerify();
+        }
+
         const j = await res.json().catch(() => ({}));
         if (res.ok) {
-                if (j.accessToken) {
-                    try { setAccessToken(j.accessToken); } catch (e) {}
-                }
+            if (j.accessToken) {
+                try { setAccessToken(j.accessToken); } catch (e) {}
+            }
             window.location.replace('Velviora.html');
             return;
         } else {
@@ -551,7 +580,7 @@ async function finishSignup() {
         }
     } catch (err) {
         console.error(err);
-        document.getElementById('modalError').textContent = 'Network error.';
+        document.getElementById('modalError').textContent = 'Network error. Please try again.';
         document.getElementById('modalError').style.display = 'flex';
         return;
     }
