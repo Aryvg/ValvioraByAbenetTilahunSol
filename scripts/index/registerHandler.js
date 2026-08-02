@@ -69,33 +69,48 @@ export async function registerHandler(fields, validateField) {
               formData.append('country', country);
               formData.append('confirm', confirm);
 
-              const res = await fetch('https://valviorabackend2.onrender.com/register', {
-              method: 'POST',
-              credentials: 'include',// this allows cookies to be stored and sent
-              body: formData
-            });
+              const attemptRegister = () => fetch('https://valviorabackend2.onrender.com/register', {
+                method: 'POST',
+                credentials: 'include',// this allows cookies to be stored and sent
+                body: formData
+              });
 
-            const json = await res.json().catch(() => ({}));
+              let res;
+              try {
+                res = await attemptRegister();
+              } catch (firstErr) {
+                // A sleeping/cold backend can drop the very first request even
+                // though it still processes it. One quiet retry covers that
+                // without bothering the user.
+                console.warn('Register request failed, retrying once...', firstErr);
+                res = await attemptRegister();
+              }
 
-            if (!res.ok) {// if the request or register did not succeed
-              const msg = document.getElementById('profile-error');
-              if (msg) { msg.textContent = json.message || `Registration failed (${res.status}).`; msg.style.color = 'red'; }
-              return;
-            }
+              const json = await res.json().catch(() => ({}));
 
-            // Registration succeeded and the verification email was sent.
-            // NOTE: the account only becomes a real, loggable-in account once
-            // the code below is verified (it currently lives in the "pending"
-            // collection, not Registered) - so there's no point trying to log
-            // in yet. Just show the verify-code modal.
-            const verifyModal = document.getElementById('verifyModal');
-            if (verifyModal) verifyModal.style.display = 'flex';
-            const signupForm = document.getElementById('signupForm');
-            if (signupForm) signupForm.style.display = 'none';
+              if (!res.ok) {// if the request or register did not succeed
+                const msg = document.getElementById('profile-error');
+                if (msg) { msg.textContent = json.message || `Registration failed (${res.status}).`; msg.style.color = 'red'; }
+                return;
+              }
 
-            return json;
+              // Registration succeeded and the verification email was sent.
+              // NOTE: the account only becomes a real, loggable-in account once
+              // the code below is verified (it currently lives in the "pending"
+              // collection, not Registered) - so there's no point trying to log
+              // in yet. Just show the verify-code modal.
+              const verifyModal = document.getElementById('verifyModal');
+              if (verifyModal) verifyModal.style.display = 'flex';
+              const signupForm = document.getElementById('signupForm');
+              if (signupForm) signupForm.style.display = 'none';
+
+              return json;
             } catch (err) {
+              // Both attempts failed at the network level (not just a bad
+              // response) - always tell the user instead of failing silently.
               console.error(err);
+              const msg = document.getElementById('profile-error');
+              if (msg) { msg.textContent = 'Network error. Please try again.'; msg.style.color = 'red'; }
             }
           } finally {
             if (createBtn) {
