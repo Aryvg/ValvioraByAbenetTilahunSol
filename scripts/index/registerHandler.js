@@ -1,4 +1,3 @@
-
 export async function registerHandler(fields, validateField) {
           const usernameMsg = document.getElementById('email-msg');
           let allValid = true;// means assume everything is correct unless we find a problem
@@ -75,52 +74,26 @@ export async function registerHandler(fields, validateField) {
               credentials: 'include',// this allows cookies to be stored and sent
               body: formData
             });
-           
-            if (!res.ok) {// if the request or regigster did not succeed
-              if (res.status === 401) {// if accessToken expired, try refreshToken
-                return await sendRefreshToken();
-              }
-              throw new Error(`${res.status} ${res.statusText}`);
-            } else {// if request or register succeeds
-              // After successful registration, perform login to receive auth cookies/tokens
-              // the below code performs authoLogin after registration
-              try {
-                const authRes = await fetch('https://valviorabackend2.onrender.com/auth', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  credentials: 'include',
-                  body: JSON.stringify({ user: username, pwd: pwd })
-                });
-                if (authRes.ok) {
-                  // Show modal overlay instead of redirecting
-                  const verifyModal = document.getElementById('verifyModal');
-                  if (verifyModal) {
-                    verifyModal.style.display = 'flex';
-                  }
-                  // Optionally hide signup form
-                  const signupForm = document.getElementById('signupForm');
-                  if (signupForm) {
-                    signupForm.style.display = 'none';
-                  }
-                  return await authRes.json();
-                  return await authRes.json();
-                } else {
-                  // If login failed for some reason, show modal anyway for verification
-                  const verifyModal = document.getElementById('verifyModal');
-                  if (verifyModal) {
-                    verifyModal.style.display = 'flex';
-                  }
-                  const signupForm = document.getElementById('signupForm');
-                  if (signupForm) {
-                    signupForm.style.display = 'none';
-                  }
-                }
-              } catch (e) {
-                console.error('auto-login after register failed', e);
-                window.location.href = 'Velviora.html';
-              }
+
+            const json = await res.json().catch(() => ({}));
+
+            if (!res.ok) {// if the request or register did not succeed
+              const msg = document.getElementById('profile-error');
+              if (msg) { msg.textContent = json.message || `Registration failed (${res.status}).`; msg.style.color = 'red'; }
+              return;
             }
-            return await res.json();
+
+            // Registration succeeded and the verification email was sent.
+            // NOTE: the account only becomes a real, loggable-in account once
+            // the code below is verified (it currently lives in the "pending"
+            // collection, not Registered) - so there's no point trying to log
+            // in yet. Just show the verify-code modal.
+            const verifyModal = document.getElementById('verifyModal');
+            if (verifyModal) verifyModal.style.display = 'flex';
+            const signupForm = document.getElementById('signupForm');
+            if (signupForm) signupForm.style.display = 'none';
+
+            return json;
             } catch (err) {
               console.error(err);
             }
