@@ -82,8 +82,10 @@ export function validateFormFields() {
     }
 
     const btn = getSaveButton();
-    if (btn) btn.disabled = !valid;
-    return valid;
+    const durationErrorEl = document.getElementById('videoDurationError') || document.getElementById('videoInputError');
+    const hasDurationError = durationErrorEl && durationErrorEl.style.display !== 'none' && durationErrorEl.textContent.trim();
+    if (btn) btn.disabled = !valid || !!hasDurationError;
+    return valid && !hasDurationError;
 }
 
 // Attach listeners early so UI updates dynamically
