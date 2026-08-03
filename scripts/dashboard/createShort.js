@@ -2,6 +2,7 @@ import { getAccessToken } from '../auth.js';
 import { showSuccessPopup } from './successPopup.js';
 
 let isUploading = false;
+const MAX_SHORT_DURATION_SECONDS = 3 * 60;
 const MIN_TIMEOUT = 3 * 60 * 1000;
 const BYTES_PER_SEC_FLOOR = 200 * 1024;
 
@@ -44,6 +45,27 @@ function getVideoDuration(file) {
     });
 }
 
+function getVideoDurationSeconds(file) {
+    return new Promise((resolve) => {
+        const url = URL.createObjectURL(file);
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.src = url;
+        video.onloadedmetadata = () => {
+            URL.revokeObjectURL(url);
+            resolve(Math.floor(video.duration) || 0);
+        };
+        video.onerror = () => { URL.revokeObjectURL(url); resolve(0); };
+    });
+}
+
+function setShortVideoError(message) {
+    const errEl = document.getElementById('videoDurationError');
+    if (!errEl) return;
+    errEl.textContent = message || '';
+    errEl.style.display = message ? 'block' : 'none';
+}
+
 async function uploadShort() {
     const titleEl = document.getElementById('titleInput');
     const videoEl = document.getElementById('videoInput');
@@ -58,10 +80,17 @@ async function uploadShort() {
     if (!videoEl.files[0]) return alert('Please select a video file.');
     if (!imageEl.files[0]) return alert('Please select a thumbnail image.');
 
+    const rawVideo = videoEl.files[0];
+    const durationSeconds = await getVideoDurationSeconds(rawVideo);
+    if (durationSeconds > MAX_SHORT_DURATION_SECONDS) {
+        setShortVideoError('Short videos must be 3 minutes or less. Please upload a valid short video.');
+        const saveBtn = document.getElementById('saveBtn');
+        if (saveBtn) saveBtn.disabled = true;
+        return;
+    }
+
     const formData = new FormData();
     formData.append('title', titleEl.value.trim());
-
-    const rawVideo = videoEl.files[0];
     formData.append('timer', await getVideoDuration(rawVideo));
     formData.append('video', rawVideo, rawVideo.name);
 
