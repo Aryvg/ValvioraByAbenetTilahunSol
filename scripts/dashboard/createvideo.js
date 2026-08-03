@@ -76,6 +76,21 @@ export async function uploadEmployee() {
     formData.append('DetailedDescription', detailedDescEl.value.trim());
     // Video handling: compress if over size limit
     const rawVideo = videoEl.files[0];
+    // Defensive check: require >= 60 seconds for regular videos
+    const durationStr = await getVideoDuration(rawVideo);
+    const [mStr, sStr] = (durationStr || '0:00').split(':');
+    const durSecs = (parseInt(mStr || '0', 10) || 0) * 60 + (parseInt(sStr || '0', 10) || 0);
+    if (durSecs < 60) {
+        // ensure error element exists in DOM (dashboard.js creates it too)
+        const parent = document.getElementById('videoFileGroup');
+        if (parent && !document.getElementById('videoInputError')) {
+            const d = document.createElement('div');
+            d.className = 'input-error'; d.id = 'videoInputError'; d.style.cssText = 'display:none;color:#c00;font-size:12px;margin-top:4px'; parent.appendChild(d);
+        }
+        const errEl = document.getElementById('videoInputError');
+        if (errEl) { errEl.textContent = 'Video must be at least 1 minute. Please upload it as a Short.'; errEl.style.display = 'block'; }
+        return alert('Video must be at least 1 minute. Upload shorts via the Shorts flow.');
+    }
     formData.append('timer', await getVideoDuration(rawVideo));
     formData.append('video', rawVideo, rawVideo.name);
     // Validate image type before appending
