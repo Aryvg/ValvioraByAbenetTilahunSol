@@ -541,8 +541,10 @@ function initSharePopup() {
     const shortId = container?.dataset.shortId;
     if (!shortId) return;
 
-    const url = `${window.location.origin}/Shorts?shortId=${encodeURIComponent(shortId)}`;
-    shareUrlInput.value = url;
+    const urlObj = new URL(window.location.href);
+    urlObj.searchParams.set('shortId', shortId);
+    urlObj.hash = '';
+    shareUrlInput.value = urlObj.toString();
     shareOverlay.style.display = 'flex';
   });
 
