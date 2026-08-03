@@ -15,6 +15,7 @@
         const STORE_NAME = "VideosBlob";
         let db;
         let tempPlaylistVideos = [];
+        let plVideoDurationValid = null; // null = unknown, true/false = validated
         let currentChannelId = null;
         let videos = JSON.parse(localStorage.getItem('nile_market_videos')) || [];
         let editingId = null;
@@ -72,6 +73,14 @@
                 valid = false;
             } else if (videoFile.size > maxVideoSize) {
                 videoMsg = 'Video file must be 95 MB or smaller.';
+                valid = false;
+            } else if (plVideoDurationValid === false) {
+                // duration was checked elsewhere (async) and found too short
+                videoMsg = 'Playlist videos must be at least 1 minute. Add short videos as Shorts.';
+                valid = false;
+            } else if (plVideoDurationValid === null) {
+                // duration check still pending — prevent accidental enabling
+                videoMsg = 'Checking video duration...';
                 valid = false;
             }
 
@@ -262,10 +271,82 @@
             if (plShortEl) plShortEl.addEventListener('input', () => validatePlaylistItemForm());
             const plLongEl = document.getElementById('plVideoLong');
             if (plLongEl) plLongEl.addEventListener('input', () => validatePlaylistItemForm());
+            // Helper: get duration in seconds for a File
+            async function getFileDurationSeconds(file) {
+                if (!file) return 0;
+                return new Promise((resolve) => {
+                    const url = URL.createObjectURL(file);
+                    const video = document.createElement('video');
+                    video.preload = 'metadata';
+                    video.src = url;
+                    video.onloadedmetadata = () => { URL.revokeObjectURL(url); resolve(Math.floor(video.duration) || 0); };
+                    video.onerror = () => { URL.revokeObjectURL(url); resolve(0); };
+                });
+            }
+
+            // Ensure error container for main upload input
+            function ensureMainVideoError() {
+                if (!document.getElementById('videoInputError')) {
+                    const parent = document.getElementById('videoFileGroup');
+                    if (parent) {
+                        const d = document.createElement('div');
+                        d.className = 'input-error';
+                        d.id = 'videoInputError';
+                        d.style.cssText = 'display:none;color:#c00;font-size:12px;margin-top:4px';
+                        parent.appendChild(d);
+                    }
+                }
+            }
+
+            document.getElementById('videoInput').addEventListener('change', async (e) => {
+                currentFile = e.target.files[0];
+                ensureMainVideoError();
+                const errId = 'videoInputError';
+                const saveBtn = document.getElementById('saveBtn');
+                // Skip check for shorts upload
+                if (activeUploadType === 'shorts') { document.getElementById(errId).style.display = 'none'; if (saveBtn) saveBtn.disabled = false; return; }
+                if (!currentFile) { document.getElementById(errId).style.display = 'none'; if (saveBtn) saveBtn.disabled = false; return; }
+                const secs = await getFileDurationSeconds(currentFile);
+                if (secs < 60) {
+                    document.getElementById(errId).textContent = 'Video must be at least 1 minute. Please upload it as a Short.';
+                    document.getElementById(errId).style.display = 'block';
+                    if (saveBtn) saveBtn.disabled = true;
+                } else {
+                    document.getElementById(errId).style.display = 'none';
+                    if (saveBtn) saveBtn.disabled = false;
+                }
+            });
+
             const plVideoFileEl = document.getElementById('plVideoFile');
-            if (plVideoFileEl) plVideoFileEl.addEventListener('change', () => validatePlaylistItemForm());
+            if (plVideoFileEl) plVideoFileEl.addEventListener('change', async () => {
+                validatePlaylistItemForm();
+                const file = plVideoFileEl.files[0];
+                if (!file) { plVideoDurationValid = null; return; }
+                const secs = await getFileDurationSeconds(file);
+                plVideoDurationValid = secs >= 60;
+                if (!plVideoDurationValid) {
+                    setFieldError('plVideoFileError', 'Playlist videos must be at least 1 minute. Add short videos as Shorts.');
+                    document.getElementById('addVideoToTempBtn').disabled = true;
+                } else {
+                    setFieldError('plVideoFileError', '');
+                    validatePlaylistItemForm();
+                }
+            });
             const plThumbFileEl = document.getElementById('plVideoThumb');
-            if (plThumbFileEl) plThumbFileEl.addEventListener('change', () => validatePlaylistItemForm());
+            if (plThumbFileEl) plThumbFileEl.addEventListener('change', async () => {
+                // Run normal validation first
+                validatePlaylistItemForm();
+                // Re-check video duration so a thumbnail change cannot clear the duration error
+                const file = document.getElementById('plVideoFile')?.files?.[0];
+                if (!file) return;
+                const secs = await getFileDurationSeconds(file);
+                plVideoDurationValid = secs >= 60;
+                if (!plVideoDurationValid) {
+                    setFieldError('plVideoFileError', 'Playlist videos must be at least 1 minute. Add short videos as Shorts.');
+                    const addBtn = document.getElementById('addVideoToTempBtn');
+                    if (addBtn) addBtn.disabled = true;
+                }
+            });
 
             document.getElementById('saveBtn').addEventListener('click', async () => {
                 if (editingId) {
