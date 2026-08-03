@@ -196,6 +196,11 @@ export async function uploadPlaylistVideos(plName, videosArray) {
             const segmentStart = index / total;
             const segmentEnd = (index + 1) / total;
             const duration = await getVideoDuration(v.file);
+            // Defensive: playlist videos must be >= 60 seconds
+            const parts = (duration || '0:00').split(':');
+            const mins = parseInt(parts[0] || '0', 10) || 0;
+            const secs = parseInt(parts[1] || '0', 10) || 0;
+            if ((mins * 60 + secs) < 60) throw new Error('Playlist videos must be at least 1 minute long.');
             const formData = new FormData();
             formData.append('title', v.title);
             formData.append('shortDescription', v.shortDesc || v.title);
