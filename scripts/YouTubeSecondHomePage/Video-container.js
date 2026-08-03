@@ -412,15 +412,24 @@ export async function renderVideoById(explicitVideoId) {
 
         const playlistImages = playlistContainer ? Array.from(playlistContainer.querySelectorAll('.side-image')) : [];
         const sidebarImages = Array.from(sidebarContainer.querySelectorAll('.side-image'));
-        if (sidebarImages.length === 0) return;
+        if (sidebarImages.length === 0 && playlistImages.length === 0) return;
 
-        const isLastPlaylistVideo = playlistImages.length > 0 && playlistImages[playlistImages.length - 1].dataset.id === currentId;
-        const nextImage = isLastPlaylistVideo
-          ? sidebarImages[0]
-          : sidebarImages.find((img) => img.dataset.id === currentId)
-            ? sidebarImages[(sidebarImages.findIndex((img) => img.dataset.id === currentId) + 1) % sidebarImages.length]
-            : sidebarImages[0];
+        // Prefer advancing within the current playlist first.
+        if (playlistImages.length > 0) {
+          const pIdx = playlistImages.findIndex(img => img.dataset.id === currentId);
+          if (pIdx !== -1) {
+            // If not the last playlist video, play next playlist video.
+            if (pIdx < playlistImages.length - 1) {
+              const next = playlistImages[pIdx + 1];
+              if (next) { next.click(); return; }
+            }
+            // else fall through to sidebar behavior when playlist finished
+          }
+        }
 
+        // Fallback: use sidebar ordering
+        const sIdx = sidebarImages.findIndex(img => img.dataset.id === currentId);
+        const nextImage = sIdx !== -1 ? sidebarImages[(sIdx + 1) % sidebarImages.length] : sidebarImages[0];
         if (nextImage) nextImage.click();
       });
     }
