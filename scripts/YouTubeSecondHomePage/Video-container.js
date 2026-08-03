@@ -309,14 +309,46 @@ export async function renderVideoById(explicitVideoId) {
       setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', viewerHasLiked);
       setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', viewerHasDisliked);
 
+      let latestReactionRequest = 0;
+      const parseCount = (value) => Number.isFinite(+value) ? +value : 0;
+
+      const optimisticUpdate = (action) => {
+        const likes = parseCount(likeCountEl.textContent);
+        const dislikes = parseCount(dislikeCountEl.textContent);
+        const liked = likeBtn.classList.contains('active');
+        const disliked = dislikeBtn.classList.contains('active');
+
+        if (action === 'like') {
+          likeCountEl.textContent = String(liked ? likes - 1 : likes + 1);
+          dislikeCountEl.textContent = String(disliked ? dislikes - 1 : dislikes);
+          setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', !liked);
+          setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', false);
+        } else {
+          dislikeCountEl.textContent = String(disliked ? dislikes - 1 : dislikes + 1);
+          likeCountEl.textContent = String(liked ? likes - 1 : likes);
+          setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', false);
+          setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', !disliked);
+        }
+
+        return { likes, dislikes, liked, disliked };
+      };
+
       likeBtn.addEventListener('click', async () => {
+        const previous = optimisticUpdate('like');
+        const requestId = ++latestReactionRequest;
         const token = await getAuthToken();
         if (!token) {
+          if (requestId === latestReactionRequest) {
+            likeCountEl.textContent = String(previous.likes);
+            dislikeCountEl.textContent = String(previous.dislikes);
+            setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', previous.liked);
+            setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', previous.disliked);
+          }
           alert('Please log in to react to this video.');
           return;
         }
         const result = await sendUpdate('like');
-        if (!result) return;
+        if (!result || requestId !== latestReactionRequest) return;
         likeCountEl.textContent = String(result.Likes ?? '0');
         dislikeCountEl.textContent = String(result.Dislikes ?? '0');
         setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', result.viewerHasLiked === true);
@@ -324,13 +356,21 @@ export async function renderVideoById(explicitVideoId) {
       });
 
       dislikeBtn.addEventListener('click', async () => {
+        const previous = optimisticUpdate('dislike');
+        const requestId = ++latestReactionRequest;
         const token = await getAuthToken();
         if (!token) {
+          if (requestId === latestReactionRequest) {
+            likeCountEl.textContent = String(previous.likes);
+            dislikeCountEl.textContent = String(previous.dislikes);
+            setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', previous.liked);
+            setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', previous.disliked);
+          }
           alert('Please log in to react to this video.');
           return;
         }
         const result = await sendUpdate('dislike');
-        if (!result) return;
+        if (!result || requestId !== latestReactionRequest) return;
         likeCountEl.textContent = String(result.Likes ?? '0');
         dislikeCountEl.textContent = String(result.Dislikes ?? '0');
         setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', result.viewerHasLiked === true);
