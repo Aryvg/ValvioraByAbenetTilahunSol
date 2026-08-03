@@ -212,12 +212,22 @@
                 document.getElementById('overlay').style.display = "none";
             });
 
+            function clearMainVideoErrors() {
+                const videoInputError = document.getElementById('videoInputError');
+                const videoDurationError = document.getElementById('videoDurationError');
+                if (videoInputError) videoInputError.style.display = 'none';
+                if (videoDurationError) videoDurationError.style.display = 'none';
+                const saveBtn = document.getElementById('saveBtn');
+                if (saveBtn) saveBtn.disabled = false;
+            }
+
             document.getElementById('openCreateBtn').addEventListener('click', () => {
                 editingId = null;
                 activeUploadType = 'video';
                 document.getElementById('modalTitle').innerText = "Upload Video";
                 document.getElementById('saveBtn').innerText = "Publish Video";
                 document.getElementById('videoFileGroup').style.display = "block";
+                clearMainVideoErrors();
                 toggleModal('uploadModal', true);
             });
 
@@ -227,6 +237,7 @@
                 document.getElementById('modalTitle').innerHTML = '<i class="fas fa-bolt" style="color:red"></i> Upload Shorts';
                 document.getElementById('saveBtn').innerText = "Publish Shorts";
                 document.getElementById('videoFileGroup').style.display = "block";
+                clearMainVideoErrors();
                 toggleModal('uploadModal', true);
             });
 
@@ -301,12 +312,25 @@
             document.getElementById('videoInput').addEventListener('change', async (e) => {
                 currentFile = e.target.files[0];
                 ensureMainVideoError();
-                const errId = 'videoInputError';
+                const errId = activeUploadType === 'shorts' ? 'videoDurationError' : 'videoInputError';
                 const saveBtn = document.getElementById('saveBtn');
-                // Skip check for shorts upload
-                if (activeUploadType === 'shorts') { document.getElementById(errId).style.display = 'none'; if (saveBtn) saveBtn.disabled = false; return; }
-                if (!currentFile) { document.getElementById(errId).style.display = 'none'; if (saveBtn) saveBtn.disabled = false; return; }
+                if (!currentFile) {
+                    document.getElementById(errId).style.display = 'none';
+                    if (saveBtn) saveBtn.disabled = false;
+                    return;
+                }
                 const secs = await getFileDurationSeconds(currentFile);
+                if (activeUploadType === 'shorts') {
+                    if (secs > 180) {
+                        document.getElementById(errId).textContent = 'Short videos must be 3 minutes or less. Please upload a valid short video.';
+                        document.getElementById(errId).style.display = 'block';
+                        if (saveBtn) saveBtn.disabled = true;
+                        return;
+                    }
+                    document.getElementById(errId).style.display = 'none';
+                    if (saveBtn) saveBtn.disabled = false;
+                    return;
+                }
                 if (secs < 60) {
                     document.getElementById(errId).textContent = 'Video must be at least 1 minute. Please upload it as a Short.';
                     document.getElementById(errId).style.display = 'block';
