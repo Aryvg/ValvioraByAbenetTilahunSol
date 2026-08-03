@@ -139,6 +139,8 @@ export async function renderVideoById(explicitVideoId) {
     const videoDescription = decodeText(data.detailedDescription || '');
     const likes            = data.Likes != null ? String(data.Likes)    : '0';
     const dislikes         = data.Dislikes != null ? String(data.Dislikes) : '0';
+    const viewerHasLiked   = data.viewerHasLiked === true;
+    const viewerHasDisliked= data.viewerHasDisliked === true;
     const time             = data.time != null ? String(data.time)      : '0:00';
     const shareUrl = (() => {
       try {
@@ -274,73 +276,65 @@ export async function renderVideoById(explicitVideoId) {
 
     const setReactionState = (button, textEl, activeText, defaultText, isActive) => {
       button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      button.classList.toggle('active', isActive);
       if (textEl) textEl.textContent = isActive ? activeText : defaultText;
     };
 
-    const sendUpdate = async (body) => {
+    const sendUpdate = async (action) => {
       const token = await getAuthToken();
-      const headers = { 'Content-Type': 'application/json' };
-      if (token) headers.Authorization = 'Bearer ' + token;
+      if (!token) return null;
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      };
       try {
-        await fetch('https://valviorabackend2.onrender.com/videoSummaryApi', {
-          method: 'PUT', headers, body: JSON.stringify(body)
+        const response = await fetch('https://valviorabackend2.onrender.com/videoSummaryApi', {
+          method: 'PUT',
+          credentials: 'include',
+          headers,
+          body: JSON.stringify({ videoId, action })
         });
+        if (!response.ok) {
+          console.warn('Reaction update failed', response.status);
+          return null;
+        }
+        return await response.json();
       } catch (e) {
         console.warn('Failed to send update', e);
+        return null;
       }
     };
 
     if (likeBtn && dislikeBtn && likeCountEl && dislikeCountEl) {
-      if (localStorage.getItem(storageKey('liked')) === '1') {
-        setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', true);
-      } else {
-        setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', false);
-      }
-
-      if (localStorage.getItem(storageKey('disliked')) === '1') {
-        setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', true);
-      } else {
-        setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', false);
-      }
+      setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', viewerHasLiked);
+      setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', viewerHasDisliked);
 
       likeBtn.addEventListener('click', async () => {
-        const liked = localStorage.getItem(storageKey('liked')) === '1';
-        const disliked = localStorage.getItem(storageKey('disliked')) === '1';
-        let likes = parseNumber(likeCountEl.textContent);
-        let dislikes = parseNumber(dislikeCountEl.textContent);
-        if (!liked) {
-          likes += 1;
-          localStorage.setItem(storageKey('liked'),'1');
-          setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', true);
-          if (disliked) { dislikes = Math.max(0, dislikes - 1); localStorage.removeItem(storageKey('disliked')); setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', false); }
-        } else {
-          likes = Math.max(0, likes - 1);
-          localStorage.removeItem(storageKey('liked'));
-          setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', false);
+        const token = await getAuthToken();
+        if (!token) {
+          alert('Please log in to react to this video.');
+          return;
         }
-        likeCountEl.textContent = fmt(likes);
-        dislikeCountEl.textContent = fmt(dislikes);
-        sendUpdate({ videoId, Likes: likes, Dislikes: dislikes });
+        const result = await sendUpdate('like');
+        if (!result) return;
+        likeCountEl.textContent = String(result.Likes ?? '0');
+        dislikeCountEl.textContent = String(result.Dislikes ?? '0');
+        setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', result.viewerHasLiked === true);
+        setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', result.viewerHasDisliked === true);
       });
 
       dislikeBtn.addEventListener('click', async () => {
-        const disliked = localStorage.getItem(storageKey('disliked')) === '1';
-        const liked = localStorage.getItem(storageKey('liked')) === '1';
-        let likes = parseNumber(likeCountEl.textContent);
-        let dislikes = parseNumber(dislikeCountEl.textContent);
-        if (!disliked) {
-          dislikes += 1;
-          localStorage.setItem(storageKey('disliked'),'1');
-          setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', true);
-          if (liked) { likes = Math.max(0, likes - 1); localStorage.removeItem(storageKey('liked')); setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', false); }
-        } else {
-          dislikes = Math.max(0, dislikes - 1);
-          localStorage.removeItem(storageKey('disliked'));
-          setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', false);
+        const token = await getAuthToken();
+        if (!token) {
+          alert('Please log in to react to this video.');
+          return;
         }
-        likeCountEl.textContent = fmt(likes);
-        dislikeCountEl.textContent = fmt(dislikes);
-        sendUpdate({ videoId, Likes: likes, Dislikes: dislikes });
+        const result = await sendUpdate('dislike');
+        if (!result) return;
+        likeCountEl.textContent = String(result.Likes ?? '0');
+        dislikeCountEl.textContent = String(result.Dislikes ?? '0');
+        setReactionState(likeBtn, likeTextEl, 'Liked', 'Like', result.viewerHasLiked === true);
+        setReactionState(dislikeBtn, dislikeTextEl, 'Disliked', 'Dislike', result.viewerHasDisliked === true);
       });
     }
 
