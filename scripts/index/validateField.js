@@ -10,13 +10,34 @@ export function validateField(field) {
         return false;// returns invalid
     }
 
-    // Do not override availability messages for username here.
-    if (field.id === 'email') {
-        // return true as long as it's non-empty; availability is handled separately
+    if (field.id === 'fname') {
+        if (value.length > 50) {
+            msg.textContent = '❌ First name must be 50 characters or less.';
+            msg.style.color = 'red';
+            return false;
+        }
+        msg.textContent = '✅ firstname is valid';
+        msg.style.color = 'green';
+        return true;
+    }
+
+    if (field.id === 'lname') {
+        if (value.length > 50) {
+            msg.textContent = '❌ Last name must be 50 characters or less.';
+            msg.style.color = 'red';
+            return false;
+        }
+        msg.textContent = '✅ lastname is valid';
+        msg.style.color = 'green';
         return true;
     }
 
     if (field.id === 'email') {
+        if (value.length > 254) {
+            msg.textContent = '❌ Email must be 254 characters or less.';
+            msg.style.color = 'red';
+            return false;
+        }
         if (!value.endsWith('@gmail.com')) {
             msg.textContent = '❌ Email is not valid';
             msg.style.color = 'red';
