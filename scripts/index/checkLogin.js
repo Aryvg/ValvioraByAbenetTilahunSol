@@ -16,8 +16,8 @@ if (loginBtn) {
         userMsg.textContent = '';
         return;
       }
-      if (v.length > 50) {
-        userMsg.textContent = 'Email must be 50 characters or less.';
+      if (v.length > 254) {
+        userMsg.textContent = 'Email must be 254 characters or less.';
         userMsg.style.color = 'red';
         return;
       }
