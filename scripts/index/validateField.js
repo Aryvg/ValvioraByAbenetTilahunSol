@@ -28,6 +28,11 @@ export function validateField(field) {
     }
 
     if (field.id === 'password') {
+        if (value.length > 64) {
+            msg.textContent = '❌ Password must be 64 characters or less.';
+            msg.style.color = 'red';
+            return false;
+        }
         if (!isStrongPassword(value)) {
             msg.textContent = '❌ Password is not strong. It must be 8 characters';
             msg.style.color = 'red';
