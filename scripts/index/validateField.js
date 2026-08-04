@@ -81,8 +81,14 @@ export function validateField(field) {
         return true;
     }
     if (field.id === 'age') {
-        if (!/^\d+$/.test(value)) {// means only numbers are allowed
-            msg.textContent = '❌ Age must be a number';
+        if (!/^[0-9]+$/.test(value)) {
+            msg.textContent = '❌ Age must be a number.';
+            msg.style.color = 'red';
+            return false;
+        }
+        const ageNum = Number(value);
+        if (ageNum < 8 || ageNum > 120) {
+            msg.textContent = '❌ Age must be between 8 and 120.';
             msg.style.color = 'red';
             return false;
         }
