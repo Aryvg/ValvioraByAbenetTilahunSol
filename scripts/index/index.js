@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const b = confirmNewPassInput ? confirmNewPassInput.value : '';
             const strong = isStrongPassword(String(a));
             const match = a === b && a.length > 0;
-            const maxLen = 12;
+            const maxLen = 64;
 
             // length checks
             const newTooLong = a.length > maxLen;
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const a = newPassInput ? newPassInput.value : '';
             const b = confirmNewPassInput ? confirmNewPassInput.value : '';
             const strong = isStrongPassword(String(a));
-            const maxLen = 12;
+            const maxLen = 64;
             if (a !== b) {
                 if (confirmErrEl) { confirmErrEl.textContent = 'Passwords do not match'; confirmErrEl.style.display = 'flex'; }
                 if (resetBtn) resetBtn.disabled = true;
