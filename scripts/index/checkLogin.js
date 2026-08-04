@@ -37,8 +37,8 @@ if (loginBtn) {
         passMsg.textContent = '';
         return;
       }
-      if (v.length > 12) {
-        passMsg.textContent = 'Password must be 12 characters or less.';
+      if (v.length > 64) {
+        passMsg.textContent = 'Password must be 64 characters or less.';
         passMsg.style.color = 'red';
         return;
       }
